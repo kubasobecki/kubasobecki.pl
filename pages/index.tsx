@@ -1,38 +1,62 @@
-import Head from "next/head";
 import Layout from "@/components/layout/layout";
-import Image from "next/image";
-import { Inter } from "@next/font/google";
-
-const inter = Inter({ subsets: ["latin-ext"] });
+import Head from "next/head";
 
 export default function Home() {
   return (
     <>
       <Head>
-        <title>Create Next App</title>
-        <meta name="description" content="Kuba Sobecki" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link
-          rel="apple-touch-icon"
-          sizes="180x180"
-          href="/apple-touch-icon.png"
-        />
-        <link
-          rel="icon"
-          type="image/png"
-          sizes="32x32"
-          href="/favicon-32x32.png"
-        />
-        <link
-          rel="icon"
-          type="image/png"
-          sizes="16x16"
-          href="/favicon-16x16.png"
-        />
-        <link rel="manifest" href="/site.webmanifest" />
+        <title>kubasobecki.pl | home</title>
       </Head>
       <Layout>
-        <h1 className="text-3xl">Hello world!</h1>
+        <h1 className="text-3xl font-bold">Hello world!</h1>
+        <p>
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eum
+          obcaecati quibusdam rerum, culpa, nobis nesciunt placeat minima vel
+          aut doloremque quis esse dolor laboriosam a illum at, porro delectus
+          reiciendis magnam? Minus iure libero soluta dicta eaque animi saepe
+          ipsa earum, nobis iste, tempora exercitationem maiores aliquam aperiam
+          totam quos magnam voluptates, repellendus voluptate autem ad facilis
+          tenetur officia asperiores? Debitis, veniam, voluptate tenetur quas
+          nam pariatur qui aspernatur molestias vel, facere nesciunt. Blanditiis
+          magni velit earum, vitae nisi temporibus porro voluptatem, dolor
+          laboriosam odit animi fugiat aut suscipit aperiam ipsum fugit
+          dignissimos, qui optio! Id, magni commodi. Perferendis nam ab earum
+          nobis, cum at eveniet repellat. Perspiciatis et inventore qui cumque,
+          esse facilis sequi enim culpa, officiis molestiae maxime consectetur
+          laborum, praesentium eaque officia ducimus aliquam quisquam.
+        </p>
+        <p>
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eum
+          obcaecati quibusdam rerum, culpa, nobis nesciunt placeat minima vel
+          aut doloremque quis esse dolor laboriosam a illum at, porro delectus
+          reiciendis magnam? Minus iure libero soluta dicta eaque animi saepe
+          ipsa earum, nobis iste, tempora exercitationem maiores aliquam aperiam
+          totam quos magnam voluptates, repellendus voluptate autem ad facilis
+          tenetur officia asperiores? Debitis, veniam, voluptate tenetur quas
+          nam pariatur qui aspernatur molestias vel, facere nesciunt. Blanditiis
+          magni velit earum, vitae nisi temporibus porro voluptatem, dolor
+          laboriosam odit animi fugiat aut suscipit aperiam ipsum fugit
+          dignissimos, qui optio! Id, magni commodi. Perferendis nam ab earum
+          nobis, cum at eveniet repellat. Perspiciatis et inventore qui cumque,
+          esse facilis sequi enim culpa, officiis molestiae maxime consectetur
+          laborum, praesentium eaque officia ducimus aliquam quisquam.
+        </p>
+        <p>
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eum
+          obcaecati quibusdam rerum, culpa, nobis nesciunt placeat minima vel
+          aut doloremque quis esse dolor laboriosam a illum at, porro delectus
+          reiciendis magnam? Minus iure libero soluta dicta eaque animi saepe
+          ipsa earum, nobis iste, tempora exercitationem maiores aliquam aperiam
+          totam quos magnam voluptates, repellendus voluptate autem ad facilis
+          tenetur officia asperiores? Debitis, veniam, voluptate tenetur quas
+          nam pariatur qui aspernatur molestias vel, facere nesciunt. Blanditiis
+          magni velit earum, vitae nisi temporibus porro voluptatem, dolor
+          laboriosam odit animi fugiat aut suscipit aperiam ipsum fugit
+          dignissimos, qui optio! Id, magni commodi. Perferendis nam ab earum
+          nobis, cum at eveniet repellat. Perspiciatis et inventore qui cumque,
+          esse facilis sequi enim culpa, officiis molestiae maxime consectetur
+          laborum, praesentium eaque officia ducimus aliquam quisquam.
+        </p>
       </Layout>
     </>
   );
