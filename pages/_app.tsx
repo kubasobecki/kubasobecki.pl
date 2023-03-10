@@ -10,8 +10,10 @@ export default function App({ Component, pageProps }: AppProps) {
       <Head>
         <title>kubasobecki.pl</title>
         <meta name="description" content="Kuba Sobecki" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, minimum-scale=1"
+        />
         <link
           rel="apple-touch-icon"
           sizes="180x180"
