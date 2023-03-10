@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import { useAppSelector, useAppDispatch } from "@/utilities/hooks";
 import { navOpenToggle } from "@/store/navopen-slice";
 import Link from "next/link";
+import { useEffect } from "react";
 
 const links = [
   { label: "Hello", url: "/" },
@@ -19,6 +20,11 @@ export default function Navigation() {
   function navOpenHandler() {
     dispatch(navOpenToggle());
   }
+
+  useEffect(() => {
+    if (isNavOpen) document.body.classList.add("overflow-hidden");
+    else document.body.removeAttribute("class");
+  }, [isNavOpen]);
 
   return (
     <>
