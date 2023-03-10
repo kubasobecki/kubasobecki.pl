@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
-import { useSelector, useDispatch } from "react-redux";
-import { navOpenActions } from "@/store/navopen-slice";
+import { useAppSelector, useAppDispatch } from "@/utilities/hooks";
+import { navOpenToggle } from "@/store/navopen-slice";
 import Link from "next/link";
 
 const links = [
@@ -13,11 +13,11 @@ const links = [
 
 export default function Navigation() {
   const router = useRouter();
-  const { isNavOpen } = useSelector((state) => state);
-  const dispatch = useDispatch();
+  const { isNavOpen } = useAppSelector((state) => state);
+  const dispatch = useAppDispatch();
 
   function navOpenHandler() {
-    dispatch(navOpenActions.navOpenToggle());
+    dispatch(navOpenToggle());
   }
 
   return (

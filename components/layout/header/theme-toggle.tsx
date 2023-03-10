@@ -1,16 +1,16 @@
 import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { themeActions } from "@/store/theme-slice";
+import { useAppSelector, useAppDispatch } from "@/utilities/hooks";
+import { setTheme } from "@/store/theme-slice";
 import { CgDarkMode } from "react-icons/cg";
 
 export default function ThemeToggle() {
-  const { theme } = useSelector((state) => state);
-  const dispatch = useDispatch();
+  const { theme } = useAppSelector((state) => state);
+  const dispatch = useAppDispatch();
 
   function themeChangeHandler() {
     const newTheme = theme === "light" ? "dark" : "light";
 
-    dispatch(themeActions.setDarkMode(newTheme));
+    dispatch(setTheme(newTheme));
     localStorage.setItem("theme", newTheme);
 
     if (newTheme === "dark") document.documentElement.classList.add("dark");
@@ -19,9 +19,9 @@ export default function ThemeToggle() {
 
   useEffect(() => {
     // Get current theme from localStorage
-    const theme = localStorage.getItem("theme");
-    if (theme) dispatch(themeActions.setDarkMode(theme));
-    if (theme === "dark") document.documentElement.classList.add("dark");
+    const localTheme = localStorage.getItem("theme");
+    if (localTheme) dispatch(setTheme(localTheme));
+    if (localTheme === "dark") document.documentElement.classList.add("dark");
   }, [dispatch]);
 
   return (

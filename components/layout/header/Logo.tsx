@@ -2,7 +2,7 @@ import Link from "next/link";
 import { useSelector } from "react-redux";
 
 export default function Logo() {
-  const { theme } = useSelector((state) => state);
+  const { theme } = useSelector((state: State) => state);
 
   return (
     <Link href="/" className="logo">
