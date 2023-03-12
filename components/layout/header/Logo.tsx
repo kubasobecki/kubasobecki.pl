@@ -1,27 +1,82 @@
+import { RootState } from "@/store/store";
 import Link from "next/link";
 import { useSelector } from "react-redux";
 
 export default function Logo() {
-  const { theme } = useSelector((state: State) => state);
+  const { theme } = useSelector((state: RootState) => state);
 
   return (
     <Link href="/" className="logo">
       <svg
+        xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 384 512"
         className="h-[48px] w-[32px] md:h-[64px] md:w-[48px]"
       >
+        <linearGradient
+          id="a"
+          x1="-8"
+          x2="96"
+          y1="40"
+          y2="144"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop offset=".1" stopColor="#F000B8" />
+          <stop offset=".9" stopColor="#0FF" />
+        </linearGradient>
         <path
-          fill="#FF0080"
-          d="m0 32 96 96v12.686c0 7.127-8.617 10.697-13.657 5.657l-72.97-72.97A32 32 0 0 1 0 50.745V32zm374.358 97.641L252.017 251.983c-6.637 6.637-17.397 6.637-24.034 0L192 216l-3.983 3.983c-6.637 6.637-6.637 17.397 0 24.034l39.966 39.966c6.637 6.637 17.397 6.637 24.034 0l126.971-126.972c8.776-8.775 5.26-22.648-4.63-27.37z"
+          fill="url(#a)"
+          d="m0 32 96 96v13c0 7-9 10-14 5L9 73a32 32 0 0 1-9-22V32z"
+        />
+        <linearGradient
+          id="b"
+          x1="183"
+          x2="384"
+          y1="209.3"
+          y2="209.3"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop offset=".1" stopColor="#F000B8" />
+          <stop offset=".9" stopColor="#0FF" />
+        </linearGradient>
+        <path
+          fill="url(#b)"
+          d="M374 130 252 252c-7 7-17 7-24 0l-36-36-4 4c-7 7-7 17 0 24l40 40c7 7 17 7 24 0l127-127c9-9 5-23-5-27z"
+        />
+        <linearGradient
+          id="c"
+          x1="0"
+          x2="96"
+          y1="16"
+          y2="16"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop offset=".1" stopColor="#B2FF1A" />
+          <stop offset=".9" stopColor="#0FF" />
+        </linearGradient>
+        <path
+          fill="url(#c)"
+          d="M96 16v16H0V16C0 7 7 0 16 0h64c9 0 16 7 16 16z"
+        />
+        <linearGradient
+          id="d"
+          x1="183"
+          x2="384"
+          y1="156"
+          y2="156"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop offset=".1" stopColor="#B2FF1A" />
+          <stop offset=".9" stopColor="#0FF" />
+        </linearGradient>
+        <path
+          fill="url(#d)"
+          d="M293 128h74l7 2 5-5c11-11 3-29-12-29h-74a32 32 0 0 0-22 9l-83 83c-7 7-7 17 0 24l4 4 79-79a32 32 0 0 1 22-9z"
         />
         <path
-          fill="#0FF"
-          d="M96 16v16H0V16C0 7.163 7.163 0 16 0h64c8.836 0 16 7.163 16 16zm197.255 112h73.717c2.73 0 5.21.602 7.386 1.641l4.63-4.63C389.694 114.305 382.112 96 366.972 96h-73.717a32 32 0 0 0-22.628 9.373l-82.61 82.61c-6.637 6.637-6.637 17.397 0 24.034L192 216l78.627-78.627A32 32 0 0 1 293.254 128z"
+          fill={theme === "dark" ? "#FFFFFF" : "#1A1A1A"}
+          d="M0 32h96v96L0 32zm252 220 122-122-7-2h-74a32 32 0 0 0-22 9l-79 79 36 36c7 7 17 7 24 0zm127 231L163 267c-6-6-16-6-22 0l-45 45v-99a32 32 0 0 0-9-22l-73-73c-5-5-14-2-14 5v372c0 15 18 23 29 12l123-123 119 119a32 32 0 0 0 22 9h74c15 0 23-18 12-29z"
         />
-        <path
-          fill={theme === "dark" ? "#e0e7ff" : "navy"}
-          d="M0 32h96v96L0 32zm252.017 219.983 122.341-122.342c-2.176-1.038-4.656-1.641-7.386-1.641h-73.717a32 32 0 0 0-22.628 9.373L192 216l35.983 35.983c6.637 6.637 17.397 6.637 24.034 0zm126.971 231.006L163.313 267.313c-6.248-6.248-16.379-6.248-22.627 0L96 312v-98.745a32 32 0 0 0-9.373-22.628l-72.97-72.97C8.616 112.617 0 116.187 0 123.313v371.658c0 15.141 18.305 22.723 29.011 12.018L152 383.999l118.627 118.628A32 32 0 0 0 293.254 512h73.717c15.141 0 22.724-18.306 12.017-29.011z"
-        />
+        <circle cx="552" cy="148" r="148" fill="#FFF" />
       </svg>
     </Link>
   );

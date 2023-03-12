@@ -6,7 +6,7 @@ import ThemeToggle from "./theme-toggle";
 export default function Header() {
   return (
     <HidingHeader>
-      <header className="relative flex h-16 w-full items-center bg-white px-8 text-indigo-800 shadow-lg dark:bg-navy dark:text-indigo-100 md:h-20">
+      <header className="relative flex h-16 w-full items-center bg-white px-8 shadow-lg duration-200 dark:bg-myDark dark:text-white md:h-24">
         <Logo />
         <Navigation />
         <ThemeToggle />

@@ -14,9 +14,10 @@ module.exports = {
     },
     extend: {
       colors: {
-        cyanBright: "#00ffff",
-        magentaBright: "#ff0080",
-        navy: "#000080",
+        myCyan: "hsl(180deg 100% 50%)", // #00FFFF
+        myMagenta: "hsl(314deg 100% 47%)", // #F000B8
+        myLime: "hsl(81deg 100% 54%)", // #ADFF16
+        myDark: "hsl(0deg 0% 10%)", // #1A1A1A
       },
     },
   },
