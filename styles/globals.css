@@ -4,6 +4,48 @@
 @tailwind utilities;
 
 @layer base {
+  /***** GENERAL *****/
+  ::selection {
+    @apply bg-myDark text-white;
+  }
+
+  html.dark ::selection {
+    @apply bg-zinc-300 text-myDark;
+  }
+
+  ::-moz-selection {
+    @apply bg-myDark text-white;
+  }
+
+  html.dark ::-moz-selection {
+    @apply bg-zinc-300 text-myDark;
+  }
+
+  body {
+    @apply bg-slate-100 dark:bg-myDark dark:text-zinc-300;
+  }
+
+  body::-webkit-scrollbar {
+    @apply w-[6px];
+  }
+
+  body::-webkit-scrollbar-thumb {
+    @apply bg-myDark/50 outline-0;
+  }
+
+  html.dark body::-webkit-scrollbar-thumb {
+    @apply bg-white/25 outline-0;
+  }
+
+  body::-webkit-scrollbar-track {
+    @apply bg-white/10;
+  }
+
+  html.dark body::-webkit-scrollbar-track {
+    @apply bg-myDark;
+  }
+
+  /***** TYPOGRAPHY *****/
   h1 {
     @apply mb-4;
   }
@@ -11,27 +53,10 @@
   h5 {
     @apply mb-2 text-2xl font-bold;
   }
-}
 
-/***** GENERAL *****/
-
-::selection {
-  @apply bg-myDark text-white;
-}
-::-moz-selection {
-  @apply bg-myDark text-white;
-}
-
-body::-webkit-scrollbar {
-  @apply w-[6px];
-}
-
-body::-webkit-scrollbar-thumb {
-  @apply bg-myDark/50 outline-0;
-}
-
-body::-webkit-scrollbar-track {
-  @apply bg-myDark/10;
+  p {
+    @apply mb-4;
+  }
 }
 
 /***** HEADER *****/
