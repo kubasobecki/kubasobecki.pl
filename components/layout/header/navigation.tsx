@@ -56,7 +56,7 @@ export default function Navigation() {
         className={`text-dark absolute inset-0 -z-10 flex h-[100svh] w-full flex-col justify-center border-t bg-gradient-to-t from-white/90 to-white text-3xl font-bold shadow-xl duration-200 ease-in-out dark:border-t-myDark dark:from-myDark/90 dark:to-myDark dark:text-white md:static md:z-0 md:mr-4 md:ml-auto md:h-10 md:w-auto md:translate-x-0 md:flex-row md:border-none md:bg-none md:text-base md:shadow-none ${
           isNavOpen
             ? "translate-x-0 scale-x-100"
-            : "translate-x-[100vw] scale-x-0"
+            : "translate-x-[100vw] scale-x-0 md:scale-x-100"
         }`}
       >
         {links.map((link) => {

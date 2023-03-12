@@ -1,7 +1,7 @@
 import { HidingHeader } from "hiding-header-react";
 import Logo from "./Logo";
-import Navigation from "./navigation";
-import ThemeToggle from "./theme-toggle";
+import Navigation from "./Navigation";
+import ThemeToggle from "./ThemeToggle";
 
 export default function Header() {
   return (
