@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { useAppSelector, useAppDispatch } from "@/utilities/hooks";
-import { navOpenToggle } from "@/store/navopen-slice";
+import { navOpenToggle } from "@/store/nav-slice";
 import Link from "next/link";
 import { useEffect } from "react";
 
@@ -53,7 +53,7 @@ export default function Navigation() {
       </div>
       {/* Menu */}
       <nav
-        className={`text-dark absolute inset-0 -z-10 flex h-[100svh] w-full flex-col justify-center border-t bg-gradient-to-b from-white to-white/90 text-3xl font-bold duration-200 ease-in-out dark:border-t-myDark dark:from-myDark dark:to-myDark/90 dark:text-white md:static md:z-0 md:mr-4 md:ml-auto md:h-10 md:w-auto md:translate-x-0 md:flex-row md:border-none md:bg-none md:text-base md:shadow-none ${
+        className={`text-dark absolute inset-0 -z-10 flex h-[100svh] w-full flex-col justify-center border-t bg-gradient-to-b from-white to-white/90 font-sans text-3xl duration-200 ease-in-out dark:border-t-myDark dark:from-myDark dark:to-myDark/90 dark:text-white md:static md:z-0 md:mr-4 md:ml-auto md:h-10 md:w-auto md:translate-x-0 md:flex-row md:border-none md:bg-none md:text-base md:shadow-none ${
           isNavOpen
             ? "translate-x-0 scale-x-100"
             : "translate-x-[100vw] scale-x-0 md:scale-x-100"
@@ -75,7 +75,7 @@ export default function Navigation() {
             >
               {link.label}
               <div
-                className={`left absolute left-0 -z-10 h-full w-full origin-left scale-x-0 bg-myLime duration-300 ${
+                className={`left absolute left-0 -z-10 ml-[10%] h-full w-[80%] origin-left skew-x-[-12.25deg] scale-x-0 bg-gradient-to-tr from-myLime to-myLime/75 duration-300 md:ml-0 md:w-full ${
                   isCurrentPage
                     ? ""
                     : " group-hover:scale-x-100 md:group-hover:scale-y-100"
@@ -88,3 +88,4 @@ export default function Navigation() {
     </>
   );
 }
+``;

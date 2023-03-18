@@ -1,8 +1,5 @@
-import {
-  AiOutlineGithub,
-  AiFillLinkedin,
-  AiFillTwitterCircle,
-} from "react-icons/ai";
+import { AiOutlineGithub, AiFillLinkedin } from "react-icons/ai";
+import { FaTelegramPlane, FaWhatsapp } from "react-icons/fa";
 
 export default function Footer() {
   return (
@@ -25,15 +22,25 @@ export default function Footer() {
           <AiFillLinkedin size="24" />
         </a>
         <a
-          href="https://twitter.com/_kubasobecki"
+          href="https://t.me/KubaSobecki"
           target="_blank"
           rel="noreferrer"
           className="p-1 text-white/90 duration-300 hover:text-myLime"
         >
-          <AiFillTwitterCircle size="24" />
+          <FaTelegramPlane size="24" />
+        </a>
+        <a
+          href="https://wa.me/48519676788"
+          target="_blank"
+          rel="noreferrer"
+          className="p-1 text-white/90 duration-300 hover:text-myLime"
+        >
+          <FaWhatsapp size="24" />
         </a>
       </div>
-      <p className="text-white/90">© {new Date().getFullYear()} Kuba Sobecki</p>
+      <span className="text-white/90">
+        © {new Date().getFullYear()} Kuba Sobecki
+      </span>
     </footer>
   );
 }

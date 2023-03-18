@@ -9,23 +9,19 @@ export default function Home() {
       </Head>
       <Layout>
         <div className="mx-auto max-w-7xl">
-          <h1 className="text-3xl font-bold">Hello world!</h1>
-          <p>
+          <h1 className="">Hello world!</h1>
+          <p className="font-mono text-lg">
             Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eum
             obcaecati quibusdam rerum, culpa, nobis nesciunt placeat minima vel
             aut doloremque quis esse dolor laboriosam a illum at, porro delectus
-            reiciendis magnam? Minus iure libero soluta dicta eaque animi saepe
-            ipsa earum, nobis iste, tempora exercitationem maiores aliquam
-            aperiam totam quos magnam voluptates, repellendus voluptate autem ad
-            facilis tenetur officia asperiores? Debitis, veniam, voluptate
-            tenetur quas nam pariatur qui aspernatur molestias vel, facere
-            nesciunt. Blanditiis magni velit earum, vitae nisi temporibus porro
+            reiciendis magnam? Minus iure libero dicta eaque animi saepe ipsa
+            earum, nobis iste, tempora exercitationem maiores aliquam aperiam
+            totam quos magnam voluptates, repellendus voluptate autem ad facilis
+            tenetur officia asperiores? Debitis, veniam, voluptate tenetur quas
+            nam pariatur qui aspernatur molestias vel, facere nesciunt.
+            Blanditiis magni velit earum, vitae nisi temporibus porro
             voluptatem, dolor laboriosam odit animi fugiat aut suscipit aperiam
-            ipsum fugit dignissimos, qui optio! Id, magni commodi. Perferendis
-            nam ab earum nobis, cum at eveniet repellat. Perspiciatis et
-            inventore qui cumque, esse facilis sequi enim culpa, officiis
-            molestiae maxime consectetur laborum, praesentium eaque officia
-            ducimus aliquam quisquam.
+            ipsum fugit dignissimos, qui optio! Id, magni commodi.
           </p>
           <svg
             xmlns="http://www.w3.org/2000/svg"

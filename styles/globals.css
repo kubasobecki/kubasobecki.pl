@@ -1,10 +1,25 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&family=Rubik:wght@700&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   /***** GENERAL *****/
+
+  /* Change Autocomplete styles in Chrome*/
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  textarea:-webkit-autofill,
+  textarea:-webkit-autofill:hover,
+  textarea:-webkit-autofill:focus,
+  select:-webkit-autofill,
+  select:-webkit-autofill:hover,
+  select:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0px 1000px white inset;
+    transition: background-color 5000s ease-in-out 0s;
+  }
+
   ::selection {
     @apply bg-myDark text-white;
   }
@@ -22,36 +37,80 @@
   }
 
   body {
-    @apply bg-slate-100 dark:bg-myDark dark:text-zinc-300;
+    @apply bg-slate-100 font-mono dark:bg-myDark dark:text-zinc-300;
   }
 
-  body::-webkit-scrollbar {
-    @apply w-[6px];
+  ::-webkit-scrollbar {
+    @apply w-[8px];
   }
 
-  body::-webkit-scrollbar-thumb {
+  ::-webkit-scrollbar-thumb {
     @apply bg-myDark/50 outline-0;
   }
 
-  html.dark body::-webkit-scrollbar-thumb {
+  html.dark ::-webkit-scrollbar-thumb {
     @apply bg-white/25 outline-0;
   }
 
-  body::-webkit-scrollbar-track {
+  ::-webkit-scrollbar-track {
     @apply bg-white/10;
   }
 
-  html.dark body::-webkit-scrollbar-track {
+  html.dark ::-webkit-scrollbar-track {
     @apply bg-myDark;
   }
 
+  /***** INPUTS *****/
+  [type="text"],
+  [type="email"],
+  [type="url"],
+  [type="password"],
+  [type="number"],
+  [type="date"],
+  [type="datetime-local"],
+  [type="month"],
+  [type="search"],
+  [type="tel"],
+  [type="time"],
+  [type="week"],
+  [multiple],
+  textarea,
+  select {
+    @apply mb-2 block w-full cursor-auto border-0 p-4 focus:ring-1 focus:ring-myDark;
+  }
+
   /***** TYPOGRAPHY *****/
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-sans;
+  }
+
   h1 {
-    @apply mb-4;
+    @apply mb-4 text-6xl;
+  }
+
+  h2 {
+    @apply mb-3 text-5xl;
+  }
+
+  h3 {
+    @apply mb-3 text-4xl;
+  }
+
+  h4 {
+    @apply mb-3 text-3xl;
   }
 
   h5 {
-    @apply mb-2 text-2xl font-bold;
+    @apply mb-2 text-2xl;
+  }
+
+  h6 {
+    @apply mb-1 text-xl;
   }
 
   p {

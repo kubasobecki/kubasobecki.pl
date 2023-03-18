@@ -9,19 +9,19 @@ module.exports = {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    fontFamily: {
-      sans: "Poppins, sans-serif",
-    },
     extend: {
+      fontFamily: {
+        sans: "Rubik, sans-serif",
+        mono: "Roboto Mono, monospace",
+      },
       colors: {
         myCyan: "hsl(180deg 100% 50%)", // #00FFFF
         myMagenta: "hsl(314deg 100% 47%)", // #F000B8
         myLime: "hsl(81deg 100% 54%)", // #ADFF16
-        // myDark: "hsl(0deg 0% 10%)", // #1A1A1A
         myDark: "hsl(240deg 6% 10%)", // #18181B
       },
     },
   },
   darkMode: "class",
-  plugins: [],
+  plugins: [require("@tailwindcss/forms")],
 };
