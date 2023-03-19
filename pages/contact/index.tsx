@@ -9,8 +9,18 @@ export default function Contact() {
         <title>kubasobecki.pl | contact</title>
       </Head>
       <Layout>
-        <h1 className="text-3xl font-bold">Contact!</h1>
-        <ContactForm />
+        <h1 className="">Contact</h1>
+        <div className="grid gap-8 md:grid-cols-2">
+          <div className="rounded bg-slate-200 p-4">
+            <p>Kuba Sobecki</p>
+            <p>+48 519 67 67 88</p>
+            <p>kubasobecki@gmail.com</p>
+            <p>Kuba Sobecki</p>
+          </div>
+          <div className="rounded bg-slate-200 p-4">
+            <ContactForm />
+          </div>
+        </div>
       </Layout>
     </>
   );

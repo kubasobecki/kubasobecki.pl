@@ -16,7 +16,7 @@ export default function ContactForm() {
     >
       {({ dirty, touched, isValid, errors, isSubmitting, status }) => {
         return (
-          <Form className="mx-auto">
+          <Form>
             <div className="relative">
               <Field
                 name="name"

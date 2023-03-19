@@ -8,7 +8,7 @@ export default function Projects() {
         <title>kubasobecki.pl | projects</title>
       </Head>
       <Layout>
-        <h1 className="text-3xl font-bold">Projects!</h1>
+        <h1 className="">Projects</h1>
       </Layout>
     </>
   );
