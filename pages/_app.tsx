@@ -6,7 +6,7 @@ import { store } from "../store/store";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <>
+    <Provider store={store}>
       <Head>
         <title>kubasobecki.pl</title>
         <meta name="description" content="Kuba Sobecki" />
@@ -36,9 +36,7 @@ export default function App({ Component, pageProps }: AppProps) {
         <meta name="msapplication-TileColor" content="#da532c" />
         <meta name="theme-color" content="#ffffff" />
       </Head>
-      <Provider store={store}>
-        <Component {...pageProps} />
-      </Provider>
-    </>
+      <Component {...pageProps} />
+    </Provider>
   );
 }

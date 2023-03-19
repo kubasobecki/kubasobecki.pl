@@ -1,56 +1,21 @@
-import { Formik, Field, Form, FormikHelpers } from "formik";
-import * as Yup from "yup";
-
-interface Values {
-  name: string;
-  email: string;
-  message: string;
-}
-
-const formValidationSchema = Yup.object({
-  name: Yup.string()
-    .required("Enter your name")
-    .max(32, "Must be 32 characters or less"),
-  email: Yup.string()
-    .required("Enter your email")
-    // .email("Invalid email address") // this does poor job hence regex
-    .matches(
-      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-      "Invalid email address"
-    )
-    .max(64, "Must be 64 characters or less"),
-  message: Yup.string()
-    .required("Enter your message")
-    .min(4, "Must be 4 characters or more")
-    .max(1000, "Must be 1000 characters or less"),
-});
+import { Formik, Field, Form, ErrorMessage } from "formik";
+import { contactValidationClient } from "@/config/yup";
+import { sendContactForm } from "@/utilities/api";
 
 const errorFieldClasses = "ring-1 ring-red-500 focus:ring-red-500";
-
-const ErrorMessage = ({ touched, message }) =>
-  touched &&
-  message && (
-    <div className="absolute top-0 right-0 bg-red-500 px-2 py-0 text-xs text-white">
-      {message}
-    </div>
-  );
 
 export default function ContactForm() {
   return (
     <Formik
       initialValues={{ name: "", email: "", message: "" }}
-      // validateOnChange={false}
-      validationSchema={formValidationSchema}
-      onSubmit={async (
-        values: Values,
-        { setSubmitting }: FormikHelpers<Values>
-      ) => {
-        await new Promise((resolve) => setTimeout(resolve, 500));
-        alert(JSON.stringify(values, null, 2));
+      validationSchema={contactValidationClient}
+      onSubmit={async (values, { setSubmitting }) => {
+        setSubmitting(true);
+        await sendContactForm(values);
         setSubmitting(false);
       }}
     >
-      {({ dirty, isValid, isSubmitting, errors, touched, values }) => {
+      {({ dirty, touched, isValid, errors, isSubmitting }) => {
         return (
           <Form className="mx-auto">
             <div className="relative">
@@ -60,7 +25,11 @@ export default function ContactForm() {
                 placeholder="Name"
                 className={errors.name && touched.name && errorFieldClasses}
               />
-              <ErrorMessage message={errors.name} touched={touched.name} />
+              <ErrorMessage
+                component="div"
+                name="name"
+                className="absolute top-0 right-0 bg-red-500 px-2 py-0 text-xs text-white"
+              />
             </div>
 
             <div className="relative">
@@ -70,7 +39,11 @@ export default function ContactForm() {
                 placeholder="Email"
                 className={errors.email && touched.email && errorFieldClasses}
               />
-              <ErrorMessage message={errors.email} touched={touched.email} />
+              <ErrorMessage
+                component="div"
+                name="email"
+                className="absolute top-0 right-0 bg-red-500 px-2 py-0 text-xs text-white"
+              />
             </div>
 
             <div className="relative">
@@ -83,8 +56,9 @@ export default function ContactForm() {
                 }
               />
               <ErrorMessage
-                message={errors.message}
-                touched={touched.message}
+                component="div"
+                name="message"
+                className="absolute top-0 right-0 bg-red-500 px-2 py-0 text-xs text-white"
               />
             </div>
 
@@ -99,8 +73,6 @@ export default function ContactForm() {
             {/* {console.log(errors)} */}
             {/* {console.log(dirty)} */}
             {/* {console.log(touched)} */}
-
-            {JSON.stringify(values)}
           </Form>
         );
       }}
