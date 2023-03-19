@@ -1,6 +1,7 @@
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import { contactValidationClient } from "@/config/yup";
 import { sendContactForm } from "@/utilities/api";
+import ConfirmationMessage from "./ConfirmationMessage";
 
 const errorFieldClasses = "ring-1 ring-red-500 focus:ring-red-500";
 const errorMessageClasses =
@@ -16,17 +17,6 @@ export default function ContactForm() {
       {({ dirty, touched, isValid, errors, isSubmitting, status }) => {
         return (
           <Form className="mx-auto">
-            {status && (
-              <div
-                className={`mb-2 px-4 py-2 text-center ${
-                  status.ok
-                    ? "bg-myLime font-bold text-myDark"
-                    : "bg-red-500 text-white"
-                }`}
-              >
-                {status.message}
-              </div>
-            )}
             <div className="relative">
               <Field
                 name="name"
@@ -78,6 +68,7 @@ export default function ContactForm() {
             >
               Send{isSubmitting && "ing..."}
             </button>
+            <ConfirmationMessage status={status} timeout={3000} />
           </Form>
         );
       }}
