@@ -16,8 +16,9 @@
   select:-webkit-autofill,
   select:-webkit-autofill:hover,
   select:-webkit-autofill:focus {
-    -webkit-box-shadow: 0 0 0px 1000px rgba(0, 0, 0, 0) inset;
-    transition: background-color 5000s ease-in-out 0s;
+    -webkit-text-fill-color: black !important;
+    -webkit-box-shadow: 0 0 0px 1000px white inset !important;
+    /* transition: background-color 5000s ease-in-out 0s; */
   }
 
   html.dark input:-webkit-autofill,
@@ -29,7 +30,8 @@
   html.dark select:-webkit-autofill,
   html.dark select:-webkit-autofill:hover,
   html.dark select:-webkit-autofill:focus {
-    -webkit-text-fill-color: white;
+    -webkit-text-fill-color: rgba(255, 255, 255, 0.75) !important;
+    -webkit-box-shadow: 0 0 0px 1000px #0c0c0d inset !important;
   }
 
   ::selection {
