@@ -3,21 +3,30 @@ import { contactValidationClient } from "@/config/yup";
 import { sendContactForm } from "@/utilities/api";
 
 const errorFieldClasses = "ring-1 ring-red-500 focus:ring-red-500";
+const errorMessageClasses =
+  "absolute top-0 right-0 bg-red-500 px-2 py-0 text-xs text-white";
 
 export default function ContactForm() {
   return (
     <Formik
       initialValues={{ name: "", email: "", message: "" }}
       validationSchema={contactValidationClient}
-      onSubmit={async (values, { setSubmitting }) => {
-        setSubmitting(true);
-        await sendContactForm(values);
-        setSubmitting(false);
-      }}
+      onSubmit={sendContactForm}
     >
-      {({ dirty, touched, isValid, errors, isSubmitting }) => {
+      {({ dirty, touched, isValid, errors, isSubmitting, status }) => {
         return (
           <Form className="mx-auto">
+            {status && (
+              <div
+                className={`mb-2 px-4 py-2 text-center ${
+                  status.ok
+                    ? "bg-myLime font-bold text-myDark"
+                    : "bg-red-500 text-white"
+                }`}
+              >
+                {status.message}
+              </div>
+            )}
             <div className="relative">
               <Field
                 name="name"
@@ -28,7 +37,7 @@ export default function ContactForm() {
               <ErrorMessage
                 component="div"
                 name="name"
-                className="absolute top-0 right-0 bg-red-500 px-2 py-0 text-xs text-white"
+                className={errorMessageClasses}
               />
             </div>
 
@@ -42,7 +51,7 @@ export default function ContactForm() {
               <ErrorMessage
                 component="div"
                 name="email"
-                className="absolute top-0 right-0 bg-red-500 px-2 py-0 text-xs text-white"
+                className={errorMessageClasses}
               />
             </div>
 
@@ -58,7 +67,7 @@ export default function ContactForm() {
               <ErrorMessage
                 component="div"
                 name="message"
-                className="absolute top-0 right-0 bg-red-500 px-2 py-0 text-xs text-white"
+                className={errorMessageClasses}
               />
             </div>
 
@@ -69,10 +78,6 @@ export default function ContactForm() {
             >
               Send{isSubmitting && "ing..."}
             </button>
-            {/* {console.log(isSubmitting)} */}
-            {/* {console.log(errors)} */}
-            {/* {console.log(dirty)} */}
-            {/* {console.log(touched)} */}
           </Form>
         );
       }}

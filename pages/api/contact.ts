@@ -16,24 +16,22 @@ export default async function contactFormHandler(req, res) {
     // Send email with NodeMailer https://nodemailer.com/
     await transporter.sendMail({
       ...mailOptions,
+      replyTo: formData.email,
       subject: "Message from kubasobecki.pl",
       ...generateEmailContent(formData),
     });
 
     // Send success response
-    res.status(200).json({ success: true });
+    res.status(200).json({ message: "Message sent successfully ;-)" });
   } catch (error) {
-    // Send error response
-    if (error.name === "ValidationError") {
-      res.status(400).json({
-        success: false,
-        message: "Form validation failed. Check your inputs",
-      });
-    } else {
-      res.status(400).json({
-        success: false,
-        message: "Message could not be sent. Try again later.",
-      });
+    if (error.inner) {
+      res
+        .status(400)
+        .json({ message: "Form validation failed, check your inputs" });
+    } else if ((error.responseCode = 535)) {
+      res
+        .status(400)
+        .json({ message: "Failed to send message, try again later" });
     }
   }
 }

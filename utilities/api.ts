@@ -1,15 +1,26 @@
-export const sendContactForm = async (data) => {
+export const sendContactForm = async (
+  values,
+  { setSubmitting, resetForm, setStatus }
+) => {
   const options = {
     method: "POST",
     headers: { "Content-Type": "application/json", Accept: "application/json" },
-    body: JSON.stringify(data),
+    body: JSON.stringify(values),
   };
 
-  const res = await fetch("/api/contact", options);
+  try {
+    setSubmitting(true);
+    const res = await fetch("/api/contact", options);
+    const resData = await res.json();
+    setSubmitting(false);
 
-  const resData = await res.json();
+    if (res.ok) resetForm();
 
-  console.log(resData);
-
-  return resData;
+    setStatus({
+      ok: res.ok,
+      message: resData.message,
+    });
+  } catch (error) {
+    console.log(error.message);
+  }
 };
