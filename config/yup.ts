@@ -1,6 +1,6 @@
 import * as Yup from "yup";
 
-export const contactValidationClient = Yup.object({
+export const contactValidationSchemaClient = Yup.object({
   name: Yup.string()
     .required("Enter your name")
     .max(32, "Must be 32 characters or less"),
@@ -18,7 +18,7 @@ export const contactValidationClient = Yup.object({
     .max(1000, "Must be 1000 characters or less"),
 });
 
-export const contactValidationServer = Yup.object({
+export const contactValidationSchemaServer = Yup.object({
   name: Yup.string().required().max(32),
   email: Yup.string()
     .required()

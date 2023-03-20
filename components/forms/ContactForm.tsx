@@ -1,7 +1,9 @@
 import { Formik, Field, Form, ErrorMessage } from "formik";
-import { contactValidationClient } from "@/config/yup";
+import { contactValidationSchemaClient } from "@/config/yup";
+import debounce from "lodash/debounce";
 import { sendContactForm } from "@/utilities/api";
 import ConfirmationMessage from "./ConfirmationMessage";
+import { useEffect, useMemo, useRef } from "react";
 
 const errorFieldClasses = "ring-1 ring-red-500 focus:ring-red-500";
 const errorMessageClasses =
@@ -11,10 +13,20 @@ export default function ContactForm() {
   return (
     <Formik
       initialValues={{ name: "", email: "", message: "" }}
-      validationSchema={contactValidationClient}
+      validationSchema={contactValidationSchemaClient}
+      validateOnMount={true}
+      validateOnChange={false}
       onSubmit={sendContactForm}
     >
-      {({ dirty, touched, isValid, errors, isSubmitting, status }) => {
+      {({
+        dirty,
+        touched,
+        isValid,
+        errors,
+        isSubmitting,
+        status,
+        validateField,
+      }) => {
         return (
           <Form>
             <div className="relative">

@@ -1,6 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import { mailOptions, transporter } from "@/config/nodemailer";
-import { contactValidationServer } from "@/config/yup";
+import { contactValidationSchemaServer } from "@/config/yup";
 import { generateEmailContent } from "@/utilities/generators";
 
 export default async function contactFormHandler(req, res) {
@@ -11,7 +11,7 @@ export default async function contactFormHandler(req, res) {
 
   try {
     // Validate form data with Yup, will throw error if not valid
-    await contactValidationServer.validate(formData);
+    await contactValidationSchemaServer.validate(formData);
 
     // Send email with NodeMailer https://nodemailer.com/
     await transporter.sendMail({
