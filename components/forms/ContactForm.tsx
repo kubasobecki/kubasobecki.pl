@@ -1,15 +1,21 @@
-import { useEffect, useMemo } from "react";
+import { createRef, useEffect, useMemo } from "react";
 import { useFormik } from "formik";
 import { contactValidationSchemaClient } from "@/config/yup";
 import debounce from "lodash/debounce";
 import { sendContactForm } from "@/utilities/api";
 import toast, { Toaster } from "react-hot-toast";
+import ReCAPTCHA from "react-google-recaptcha";
+
+// const CAPTCHA_SITE_KEY = "6LcQ6RwlAAAAAE9QNNNKXq8OT7tGkjl5tspiQPtt";
+const recaptchaSiteKey = process.env.NEXT_PUBLIC_CAPTCHA_SITE_KEY;
 
 const errorFieldClasses = "ring-1 ring-red-500 focus:ring-red-500";
 const errorMessageClasses =
   "absolute top-0 right-0 bg-red-500 px-2 py-0 text-xs text-white";
 
 export default function ContactForm() {
+  const recaptchaRef = createRef();
+
   const {
     values,
     errors,
@@ -22,8 +28,9 @@ export default function ContactForm() {
     isValid,
     status,
     isSubmitting,
+    setFieldValue,
   } = useFormik({
-    initialValues: { name: "", email: "", message: "" },
+    initialValues: { name: "", email: "", message: "", recaptcha: "" },
     validationSchema: contactValidationSchemaClient,
     validateOnMount: true,
     validateOnBlur: true,
@@ -47,7 +54,14 @@ export default function ContactForm() {
   }, [status]);
 
   return (
-    <form onSubmit={handleSubmit}>
+    // <form onSubmit={handleSubmit}>
+    <form
+      onSubmit={handleSubmit}
+      onChange={(e) => {
+        if (!values.recaptcha) recaptchaRef.current.execute();
+        handleChange(e);
+      }}
+    >
       <div className="relative">
         <input
           id="name"
@@ -95,6 +109,15 @@ export default function ContactForm() {
         )}
       </div>
 
+      <ReCAPTCHA
+        ref={recaptchaRef}
+        size="invisible"
+        sitekey={recaptchaSiteKey}
+        onChange={(value) => {
+          setFieldValue("recaptcha", value);
+        }}
+      />
+
       <button
         type="submit"
         disabled={!dirty || !isValid || isSubmitting}
@@ -110,7 +133,7 @@ export default function ContactForm() {
         containerStyle={{}}
         toastOptions={{
           className: "toast",
-          duration: 3000000,
+          duration: 3000,
           success: {
             style: {},
             className: "toast-success",

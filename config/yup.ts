@@ -16,6 +16,7 @@ export const contactValidationSchemaClient = Yup.object({
     .required("Enter your message")
     .min(4, "Must be 4 characters or more")
     .max(1000, "Must be 1000 characters or less"),
+  recaptcha: Yup.string().required(),
 });
 
 export const contactValidationSchemaServer = Yup.object({
@@ -27,4 +28,5 @@ export const contactValidationSchemaServer = Yup.object({
     )
     .max(64),
   message: Yup.string().required().min(4).max(1000),
+  recaptcha: Yup.string().required(),
 });
