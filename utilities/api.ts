@@ -8,19 +8,11 @@ export const sendContactForm = async (
     body: JSON.stringify(values),
   };
 
-  try {
-    setSubmitting(true);
-    const res = await fetch("/api/contact", options);
-    const resData = await res.json();
-    setSubmitting(false);
-
-    if (res.ok) resetForm();
-
-    setStatus({
-      ok: res.ok,
-      message: resData.message,
-    });
-  } catch (error) {
-    console.log(error.message);
-  }
+  setSubmitting(true);
+  const res = await fetch("/api/contact", options);
+  // Errors are handled server-side
+  const resData = await res.json();
+  setSubmitting(false);
+  if (res.ok) resetForm();
+  setStatus({ ok: res.ok, message: resData.message });
 };

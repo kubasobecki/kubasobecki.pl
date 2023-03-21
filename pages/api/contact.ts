@@ -24,14 +24,10 @@ export default async function contactFormHandler(req, res) {
     // Send success response
     res.status(200).json({ message: "Message sent successfully ;-)" });
   } catch (error) {
-    if (error.inner) {
-      res
-        .status(400)
-        .json({ message: "Form validation failed, check your inputs" });
-    } else if ((error.responseCode = 535)) {
-      res
-        .status(400)
-        .json({ message: "Failed to send message, try again later" });
-    }
+    if (error.name === "ValidationError")
+      res.status(406).json({ message: "Failed to send, check your inputs" });
+    else if (error.responseCode === 535)
+      res.status(503).json({ message: "Failed to send, try again later" });
+    else res.status(400).json({ message: "Bad request" });
   }
 }

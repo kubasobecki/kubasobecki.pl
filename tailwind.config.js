@@ -15,10 +15,10 @@ module.exports = {
         mono: "Roboto Mono, monospace",
       },
       colors: {
-        myCyan: "hsl(180deg 100% 50%)", // #00FFFF
-        myMagenta: "hsl(314deg 100% 47%)", // #F000B8
-        myLime: "hsl(81deg 100% 54%)", // #ADFF16
-        myDark: "hsl(240deg 6% 10%)", // #18181B
+        myCyan: "hsl(var(--my-cyan) / <alpha-value>)", // #00FFFF
+        myMagenta: "hsl(var(--my-magenta) / <alpha-value>)", // #F000B8
+        myLime: "hsl(var(--my-lime) / <alpha-value>)", // #ADFF16
+        myDark: "hsl(var(--my-dark) / <alpha-value>)", // #18181B
       },
     },
   },

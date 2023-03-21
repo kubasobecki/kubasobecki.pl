@@ -1,9 +1,9 @@
+import { useEffect, useMemo } from "react";
 import { useFormik } from "formik";
 import { contactValidationSchemaClient } from "@/config/yup";
 import debounce from "lodash/debounce";
 import { sendContactForm } from "@/utilities/api";
-import ConfirmationMessage from "./ConfirmationMessage";
-import { useEffect, useMemo } from "react";
+import toast, { Toaster } from "react-hot-toast";
 
 const errorFieldClasses = "ring-1 ring-red-500 focus:ring-red-500";
 const errorMessageClasses =
@@ -39,6 +39,12 @@ export default function ContactForm() {
   useEffect(() => {
     debouncedValidate(values);
   }, [values, debouncedValidate]);
+
+  useEffect(() => {
+    if (!status) return;
+    if (!status.ok) toast.error(status.message);
+    if (status.ok) toast.success(status.message);
+  }, [status]);
 
   return (
     <form onSubmit={handleSubmit}>
@@ -96,7 +102,33 @@ export default function ContactForm() {
       >
         Send{isSubmitting && "ing..."}
       </button>
-      <ConfirmationMessage status={status} timeout={3000} />
+      <Toaster
+        position="bottom-right"
+        reverseOrder={false}
+        gutter={8}
+        containerClassName=""
+        containerStyle={{}}
+        toastOptions={{
+          className: "toast",
+          duration: 3000000,
+          success: {
+            style: {},
+            className: "toast-success",
+            iconTheme: {
+              primary: "hsl(var(--my-dark))",
+              secondary: "hsl(var(--my-lime))",
+            },
+          },
+          error: {
+            style: {},
+            className: "toast-error",
+            iconTheme: {
+              primary: "white",
+              secondary: "hsl(var(--my-magenta))",
+            },
+          },
+        }}
+      />
     </form>
   );
 }

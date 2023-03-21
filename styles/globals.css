@@ -6,6 +6,15 @@
 @layer base {
   /***** GENERAL *****/
 
+  /***** VARIABLES *****/
+  :root {
+    --my-cyan: 180deg 100% 50%; /* #00FFFF */
+    --my-magenta: 314deg 100% 47%; /* #F000B8 */
+    --my-lime: 81deg 100% 54%; /* #ADFF16 */
+    --my-dark: 240deg 6% 10%; /* #18181B */
+  }
+
+  /***** FIELDS *****/
   /* Change Autocomplete styles in Chrome*/
   input:-webkit-autofill,
   input:-webkit-autofill:hover,
@@ -21,6 +30,18 @@
     /* transition: background-color 5000s ease-in-out 0s; */
   }
 
+  input:-webkit-autofill::selection,
+  input:-webkit-autofill:hover::selection,
+  input:-webkit-autofill:focus::selection,
+  textarea:-webkit-autofill::selection,
+  textarea:-webkit-autofill:hover::selection,
+  textarea:-webkit-autofill:focus::selection,
+  select:-webkit-autofill::selection,
+  select:-webkit-autofill:hover::selection,
+  select:-webkit-autofill:focus::selection {
+    -webkit-text-fill-color: white !important;
+  }
+
   html.dark input:-webkit-autofill,
   html.dark input:-webkit-autofill:hover,
   html.dark input:-webkit-autofill:focus,
@@ -32,6 +53,18 @@
   html.dark select:-webkit-autofill:focus {
     -webkit-text-fill-color: rgba(255, 255, 255, 0.75) !important;
     -webkit-box-shadow: 0 0 0px 1000px #0c0c0d inset !important;
+  }
+
+  html.dark input:-webkit-autofill::selection,
+  html.dark input:-webkit-autofill:hover::selection,
+  html.dark input:-webkit-autofill:focus::selection,
+  html.dark textarea:-webkit-autofill::selection,
+  html.dark textarea:-webkit-autofill:hover::selection,
+  html.dark textarea:-webkit-autofill:focus::selection,
+  html.dark select:-webkit-autofill::selection,
+  html.dark select:-webkit-autofill:hover::selection,
+  html.dark select:-webkit-autofill:focus::selection {
+    -webkit-text-fill-color: black !important;
   }
 
   ::selection {
@@ -161,4 +194,13 @@
     transition-duration: 1ms;
     transition-timing-function: step-end;
   }
+}
+
+/***** TOAST *****/
+.toast-success {
+  @apply bg-myLime/80 text-sm font-bold text-myDark shadow-lg backdrop-blur-sm !important;
+}
+
+.toast-error {
+  @apply bg-myMagenta/80 text-sm font-bold text-white shadow-lg backdrop-blur-sm !important;
 }
