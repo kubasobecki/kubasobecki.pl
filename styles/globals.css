@@ -204,3 +204,16 @@
 .toast-error {
   @apply bg-myMagenta/80 text-sm font-bold text-white shadow-lg backdrop-blur-sm !important;
 }
+
+/********** COMPONENTS **********/
+
+@layer components {
+  /* #__next {
+    @apply h-full;
+  }
+
+  html,
+  body {
+    @apply h-full;
+  } */
+}

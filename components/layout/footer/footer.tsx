@@ -1,5 +1,20 @@
-import { AiOutlineGithub, AiFillLinkedin } from "react-icons/ai";
-import { FaTelegramPlane, FaWhatsapp } from "react-icons/fa";
+import {
+  AiOutlineGithub,
+  AiFillLinkedin,
+  AiFillMail,
+  AiFillPhone,
+  AiOutlineWhatsApp,
+} from "react-icons/ai";
+import { FaTelegramPlane } from "react-icons/fa";
+import { Tooltip } from "react-tooltip";
+import "react-tooltip/dist/react-tooltip.css";
+
+const tooltipStyle = {
+  backgroundColor: "hsl(var(--my-lime))",
+  color: "hsl(var(--my-dark))",
+  fontWeight: "bold",
+  margin: "0",
+};
 
 export default function Footer() {
   return (
@@ -7,36 +22,70 @@ export default function Footer() {
       <div className="flex space-x-2">
         <a
           href="https://github.com/kubasobecki/"
+          data-tooltip-id="tooltip-github"
+          data-tooltip-content="GitHub"
           target="_blank"
           rel="noreferrer"
           className="p-1 text-white/90 duration-300 hover:text-myLime"
         >
           <AiOutlineGithub size="24" />
         </a>
+        <Tooltip id="tooltip-github" style={tooltipStyle} />
         <a
           href="https://www.linkedin.com/in/kubasobecki/"
+          data-tooltip-id="tooltip-linkedin"
+          data-tooltip-content="LinkedIn"
           target="_blank"
           rel="noreferrer"
           className="p-1 text-white/90 duration-300 hover:text-myLime"
         >
           <AiFillLinkedin size="24" />
         </a>
+        <Tooltip id="tooltip-linkedin" style={tooltipStyle} />
         <a
           href="https://t.me/KubaSobecki"
+          data-tooltip-id="tooltip-telegram"
+          data-tooltip-content="Telegram"
           target="_blank"
           rel="noreferrer"
           className="p-1 text-white/90 duration-300 hover:text-myLime"
         >
           <FaTelegramPlane size="24" />
         </a>
+        <Tooltip id="tooltip-telegram" style={tooltipStyle} />
         <a
           href="https://wa.me/48519676788"
+          data-tooltip-id="tooltip-whatsapp"
+          data-tooltip-content="WhatsApp"
           target="_blank"
           rel="noreferrer"
           className="p-1 text-white/90 duration-300 hover:text-myLime"
         >
-          <FaWhatsapp size="24" />
+          <AiOutlineWhatsApp size="24" />
         </a>
+        <Tooltip id="tooltip-whatsapp" style={tooltipStyle} />
+        <a
+          href="mailto:kubasobecki@gmail.com"
+          data-tooltip-id="tooltip-email"
+          data-tooltip-content="Email"
+          target="_blank"
+          rel="noreferrer"
+          className="p-1 text-white/90 duration-300 hover:text-myLime"
+        >
+          <AiFillMail size="24" />
+        </a>
+        <Tooltip id="tooltip-email" style={tooltipStyle} />
+        <a
+          href="tel:+48519676788"
+          data-tooltip-id="tooltip-mobile"
+          data-tooltip-content="Mobile"
+          target="_blank"
+          rel="noreferrer"
+          className="p-1 text-white/90 duration-300 hover:text-myLime"
+        >
+          <AiFillPhone size="24" />
+        </a>
+        <Tooltip id="tooltip-mobile" style={tooltipStyle} />
       </div>
       <span className="text-white/90">
         © {new Date().getFullYear()} Kuba Sobecki

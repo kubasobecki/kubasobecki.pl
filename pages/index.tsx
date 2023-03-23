@@ -1,7 +1,10 @@
 import Layout from "@/components/layout/Layout";
+import { useAppSelector } from "@/utilities/hooks";
 import Head from "next/head";
 
 export default function Home() {
+  const { theme } = useAppSelector((state: RootState) => state);
+
   return (
     <>
       <Head>
@@ -89,7 +92,7 @@ export default function Home() {
               d="M293 128h74l7 2 5-5c11-11 3-29-12-29h-74a32 32 0 0 0-22 9l-83 83c-7 7-7 17 0 24l4 4 79-79a32 32 0 0 1 22-9z"
             />
             <path
-              fill="#18181B"
+              fill={theme === "dark" ? "#FFFFFF" : "#18181B"}
               d="M0 32h96v96L0 32zm252 220 122-122-7-2h-74a32 32 0 0 0-22 9l-79 79 36 36c7 7 17 7 24 0zm127 231L163 267c-6-6-16-6-22 0l-45 45v-99a32 32 0 0 0-9-22l-73-73c-5-5-14-2-14 5v372c0 15 18 23 29 12l123-123 119 119a32 32 0 0 0 22 9h74c15 0 23-18 12-29z"
             />
             <circle cx="552" cy="148" r="148" fill="#FFF" />
@@ -194,7 +197,7 @@ export default function Home() {
               d="M293 128h74l7 2 5-5c11-11 3-29-12-29h-74a32 32 0 0 0-22 9l-83 83c-7 7-7 17 0 24l4 4 79-79a32 32 0 0 1 22-9z"
             />
             <path
-              fill="#18181B"
+              fill={theme === "dark" ? "#FFFFFF" : "#18181B"}
               d="M0 32h96v96L0 32zm252 220 122-122-7-2h-74a32 32 0 0 0-22 9l-79 79 36 36c7 7 17 7 24 0zm127 231L163 267c-6-6-16-6-22 0l-45 45v-99a32 32 0 0 0-9-22l-73-73c-5-5-14-2-14 5v372c0 15 18 23 29 12l123-123 119 119a32 32 0 0 0 22 9h74c15 0 23-18 12-29z"
             />
             <circle cx="552" cy="148" r="148" fill="#FFF" />
@@ -299,7 +302,7 @@ export default function Home() {
               d="M293 128h74l7 2 5-5c11-11 3-29-12-29h-74a32 32 0 0 0-22 9l-83 83c-7 7-7 17 0 24l4 4 79-79a32 32 0 0 1 22-9z"
             />
             <path
-              fill="#18181B"
+              fill={theme === "dark" ? "#FFFFFF" : "#18181B"}
               d="M0 32h96v96L0 32zm252 220 122-122-7-2h-74a32 32 0 0 0-22 9l-79 79 36 36c7 7 17 7 24 0zm127 231L163 267c-6-6-16-6-22 0l-45 45v-99a32 32 0 0 0-9-22l-73-73c-5-5-14-2-14 5v372c0 15 18 23 29 12l123-123 119 119a32 32 0 0 0 22 9h74c15 0 23-18 12-29z"
             />
             <circle cx="552" cy="148" r="148" fill="#FFF" />
