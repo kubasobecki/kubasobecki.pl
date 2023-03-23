@@ -121,7 +121,7 @@ export default function ContactForm() {
       <button
         type="submit"
         disabled={!dirty || !isValid || isSubmitting}
-        className="block w-full bg-myDark py-3 px-6 font-sans uppercase text-white duration-200 hover:bg-myLime hover:text-myDark disabled:cursor-not-allowed disabled:bg-myDark/50 disabled:text-white dark:bg-myLime dark:text-black dark:hover:bg-white dark:disabled:bg-myLime/50 dark:disabled:text-black"
+        className="block w-full rounded bg-myDark py-3 px-6 font-sans uppercase text-white duration-200 hover:bg-myLime hover:text-myDark disabled:cursor-not-allowed disabled:bg-myDark/50 disabled:text-white dark:bg-myLime dark:text-black dark:hover:bg-white dark:disabled:bg-myLime/50 dark:disabled:text-black"
       >
         Send{isSubmitting && "ing..."}
       </button>

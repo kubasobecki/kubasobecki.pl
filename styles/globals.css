@@ -123,7 +123,7 @@
   [multiple],
   textarea,
   select {
-    @apply mb-2 block w-full cursor-auto border-0 p-4 focus:ring-1 focus:ring-myDark dark:bg-black/50 dark:text-white/75 dark:focus:ring-myLime;
+    @apply mb-2 block w-full cursor-auto rounded border-0 p-4 focus:ring-1 focus:ring-myDark dark:bg-black/50 dark:text-white/75 dark:focus:ring-myLime;
   }
 
   /***** TYPOGRAPHY *****/

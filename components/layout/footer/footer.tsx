@@ -22,7 +22,7 @@ export default function Footer() {
       <div className="flex space-x-2">
         <a
           href="https://github.com/kubasobecki/"
-          data-tooltip-id="tooltip-github"
+          data-tooltip-id="tooltip-footer-github"
           data-tooltip-content="GitHub"
           target="_blank"
           rel="noreferrer"
@@ -30,10 +30,10 @@ export default function Footer() {
         >
           <AiOutlineGithub size="24" />
         </a>
-        <Tooltip id="tooltip-github" style={tooltipStyle} />
+        <Tooltip id="tooltip-footer-github" style={tooltipStyle} />
         <a
           href="https://www.linkedin.com/in/kubasobecki/"
-          data-tooltip-id="tooltip-linkedin"
+          data-tooltip-id="tooltip-footer-linkedin"
           data-tooltip-content="LinkedIn"
           target="_blank"
           rel="noreferrer"
@@ -41,10 +41,10 @@ export default function Footer() {
         >
           <AiFillLinkedin size="24" />
         </a>
-        <Tooltip id="tooltip-linkedin" style={tooltipStyle} />
+        <Tooltip id="tooltip-footer-linkedin" style={tooltipStyle} />
         <a
           href="https://t.me/KubaSobecki"
-          data-tooltip-id="tooltip-telegram"
+          data-tooltip-id="tooltip-footer-telegram"
           data-tooltip-content="Telegram"
           target="_blank"
           rel="noreferrer"
@@ -52,10 +52,10 @@ export default function Footer() {
         >
           <FaTelegramPlane size="24" />
         </a>
-        <Tooltip id="tooltip-telegram" style={tooltipStyle} />
+        <Tooltip id="tooltip-footer-telegram" style={tooltipStyle} />
         <a
           href="https://wa.me/48519676788"
-          data-tooltip-id="tooltip-whatsapp"
+          data-tooltip-id="tooltip-footer-whatsapp"
           data-tooltip-content="WhatsApp"
           target="_blank"
           rel="noreferrer"
@@ -63,10 +63,10 @@ export default function Footer() {
         >
           <AiOutlineWhatsApp size="24" />
         </a>
-        <Tooltip id="tooltip-whatsapp" style={tooltipStyle} />
+        <Tooltip id="tooltip-footer-whatsapp" style={tooltipStyle} />
         <a
           href="mailto:kubasobecki@gmail.com"
-          data-tooltip-id="tooltip-email"
+          data-tooltip-id="tooltip-footer-email"
           data-tooltip-content="Email"
           target="_blank"
           rel="noreferrer"
@@ -74,10 +74,10 @@ export default function Footer() {
         >
           <AiFillMail size="24" />
         </a>
-        <Tooltip id="tooltip-email" style={tooltipStyle} />
+        <Tooltip id="tooltip-footer-email" style={tooltipStyle} />
         <a
           href="tel:+48519676788"
-          data-tooltip-id="tooltip-mobile"
+          data-tooltip-id="tooltip-footer-mobile"
           data-tooltip-content="Mobile"
           target="_blank"
           rel="noreferrer"
@@ -85,7 +85,7 @@ export default function Footer() {
         >
           <AiFillPhone size="24" />
         </a>
-        <Tooltip id="tooltip-mobile" style={tooltipStyle} />
+        <Tooltip id="tooltip-footer-mobile" style={tooltipStyle} />
       </div>
       <span className="text-white/90">
         © {new Date().getFullYear()} Kuba Sobecki

@@ -9,7 +9,7 @@ export default function Layout({
   return (
     <>
       {showHeader && <Header />}
-      <main className=" p-8 pt-12">
+      <main className="p-8 pt-12">
         <div className="mx-auto max-w-7xl">{children}</div>
       </main>
       {showFooter && <Footer />}
