@@ -16,3 +16,14 @@ export const sendContactForm = async (
   if (res.ok) resetForm();
   setStatus({ ok: res.ok, message: resData.message });
 };
+
+export const fetchProjects = async () => {
+  try {
+    const res = await fetch("/api/projects");
+    if (!res.ok) throw new Error("An error occurred, could not get projects");
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.error(error.message);
+  }
+};

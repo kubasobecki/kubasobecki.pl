@@ -20,6 +20,9 @@ module.exports = {
         myLime: "hsl(var(--my-lime) / <alpha-value>)", // #ADFF16
         myDark: "hsl(var(--my-dark) / <alpha-value>)", // #18181B
       },
+      gridTemplateColumns: {
+        auto250: "repeat(auto-fit, minmax(250px, 1fr))",
+      },
     },
   },
   darkMode: "class",
