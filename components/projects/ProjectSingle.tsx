@@ -1,6 +1,7 @@
+/* eslint-disable react/jsx-no-comment-textnodes */
 import Image from "next/image";
 
-export default function Project({
+export default function ProjectSingle({
   date,
   description,
   images,
@@ -11,7 +12,7 @@ export default function Project({
   return (
     <div>
       <h3>{name}</h3>
-      <img src={images.main} alt={name} />
+      <img src={images.main} alt={name} className="rounded-xl" />
       <p>{date}</p>
       <p>{stack.join(" | ")}</p>
       <p>{tags.join(" | ")}</p>

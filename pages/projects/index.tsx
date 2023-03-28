@@ -3,7 +3,8 @@ import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/utilities/hooks";
 import { fetchProjectsThunk } from "@/store/projects-slice";
 import Layout from "@/components/layout/Layout";
-import Project from "@/components/projects/project";
+import ProjectSingle from "@/components/projects/ProjectSingle";
+import ProjectsFilter from "@/components/projects/ProjectsFilter";
 
 export default function Projects() {
   const { projects } = useAppSelector((state) => state);
@@ -24,7 +25,8 @@ export default function Projects() {
       </Head>
       <Layout>
         <h1 className="">Projects</h1>
-        <section>
+
+        {/* <section>
           <p>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur
             cumque ullam quae alias error repellendus quod tenetur quia
@@ -42,17 +44,24 @@ export default function Projects() {
               </a>
             </p>
           </div>
-          {/* <div>{JSON.stringify(projects)}</div> */}
-        </section>
-        <section>
-          <div className="grid grid-cols-auto250">
-            {projects.status === "loading" && "Loading projects..."}
-            {projects.status === "succeeded" &&
-              projects.entries.map((props) => (
-                <Project key={props.id} {...props} />
-              ))}
-          </div>
-        </section>
+        </section> */}
+
+        {projects.status === "loading" && "Loading projects..."}
+        {projects.status === "succeeded" && (
+          <>
+            <section id="projects-filter">
+              <ProjectsFilter projects={projects.entries} />
+            </section>
+
+            <section id="projects-grid">
+              <div className="grid grid-cols-auto250">
+                {projects.entries.map((props) => (
+                  <ProjectSingle key={props.id} {...props} />
+                ))}
+              </div>
+            </section>
+          </>
+        )}
       </Layout>
     </>
   );
