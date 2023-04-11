@@ -5,6 +5,7 @@ import { fetchProjectsThunk } from "@/store/projects-slice";
 import Layout from "@/components/layout/Layout";
 import ProjectSingle from "@/components/projects/ProjectSingle";
 import ProjectsFilter from "@/components/projects/ProjectsFilter";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function Projects() {
   const { projects } = useAppSelector((state) => state);
@@ -54,16 +55,21 @@ export default function Projects() {
             </section>
 
             <section id="projects-grid">
-              <div className="grid grid-cols-auto250 gap-x-4 gap-y-8">
-                {projects.entries
-                  .filter(
-                    ({ tags }) =>
-                      projects.filter === "" || tags.includes(projects.filter)
-                  )
-                  .map((props) => (
-                    <ProjectSingle key={props.id} {...props} />
-                  ))}
-              </div>
+              <motion.div
+                layout
+                className="grid grid-cols-auto250 gap-x-4 gap-y-8"
+              >
+                <AnimatePresence>
+                  {projects.entries
+                    .filter(
+                      ({ tags }) =>
+                        projects.filter === "" || tags.includes(projects.filter)
+                    )
+                    .map((props) => (
+                      <ProjectSingle key={props.id} {...props} />
+                    ))}
+                </AnimatePresence>
+              </motion.div>
             </section>
           </>
         )}

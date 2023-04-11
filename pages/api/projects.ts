@@ -2,7 +2,7 @@ const projectsArray = [
   {
     id: 1,
     name: "Project 01",
-    tags: ["Website", "UI", "Frontend"],
+    tags: ["UI", "Frontend"],
     stack: ["HTML", "CSS", "Wordpress"],
     date: "2021-12-17",
     images: {
@@ -15,7 +15,7 @@ const projectsArray = [
   {
     id: 2,
     name: "Project 02",
-    tags: ["Website", "Web App", "UI"],
+    tags: ["Web App", "UI"],
     stack: ["HTML", "CSS", "Wordpress"],
     date: "2022-12-17",
     images: {
@@ -41,7 +41,7 @@ const projectsArray = [
   {
     id: 4,
     name: "Project 04",
-    tags: ["Website", "UI", "Frontend"],
+    tags: ["UI", "Frontend"],
     stack: ["HTML", "CSS", "Wordpress"],
     date: "2021-12-17",
     images: {
@@ -54,7 +54,7 @@ const projectsArray = [
   {
     id: 5,
     name: "Project 05",
-    tags: ["Website", "Web App", "UI"],
+    tags: ["Web App", "UI"],
     stack: ["HTML", "CSS", "Wordpress"],
     date: "2022-12-17",
     images: {
@@ -80,7 +80,7 @@ const projectsArray = [
   {
     id: 7,
     name: "Project 07",
-    tags: ["Website", "UI", "Frontend"],
+    tags: ["UI", "Frontend"],
     stack: ["HTML", "CSS", "Wordpress"],
     date: "2021-12-17",
     images: {
@@ -93,7 +93,7 @@ const projectsArray = [
   {
     id: 8,
     name: "Project 08",
-    tags: ["Website", "Web App", "UI"],
+    tags: ["Web App", "UI"],
     stack: ["HTML", "CSS", "Wordpress"],
     date: "2022-12-17",
     images: {
@@ -119,7 +119,7 @@ const projectsArray = [
   {
     id: 10,
     name: "Project 10",
-    tags: ["Website", "UI", "Frontend"],
+    tags: ["UI", "Frontend"],
     stack: ["HTML", "CSS", "Wordpress"],
     date: "2021-12-17",
     images: {
@@ -132,7 +132,7 @@ const projectsArray = [
   {
     id: 11,
     name: "Project 11",
-    tags: ["Website", "Web App", "UI"],
+    tags: ["Web App", "UI"],
     stack: ["HTML", "CSS", "Wordpress"],
     date: "2022-12-17",
     images: {
