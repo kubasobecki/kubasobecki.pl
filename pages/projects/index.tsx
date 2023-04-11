@@ -15,7 +15,7 @@ export default function Projects() {
   }, []);
 
   useEffect(() => {
-    // console.log(projects);
+    console.log(projects);
   }, [projects]);
 
   return (
@@ -54,10 +54,15 @@ export default function Projects() {
             </section>
 
             <section id="projects-grid">
-              <div className="grid grid-cols-auto250">
-                {projects.entries.map((props) => (
-                  <ProjectSingle key={props.id} {...props} />
-                ))}
+              <div className="grid grid-cols-auto250 gap-x-4 gap-y-8">
+                {projects.entries
+                  .filter(
+                    ({ tags }) =>
+                      projects.filter === "" || tags.includes(projects.filter)
+                  )
+                  .map((props) => (
+                    <ProjectSingle key={props.id} {...props} />
+                  ))}
               </div>
             </section>
           </>

@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { fetchProjects } from "@/utilities/api";
 
 interface Project {
@@ -27,9 +27,14 @@ const projectsSlice = createSlice({
   initialState: {
     status: "idle",
     entries: null,
+    filter: "",
     error: null,
   },
-  reducers: {},
+  reducers: {
+    setFilter: (state, action: PayloadAction<string>) => {
+      state.filter = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchProjectsThunk.pending, (state) => {
@@ -46,5 +51,5 @@ const projectsSlice = createSlice({
   },
 });
 
-// export const { setProjects } = projectsSlice.actions;
+export const { setFilter } = projectsSlice.actions;
 export default projectsSlice.reducer;

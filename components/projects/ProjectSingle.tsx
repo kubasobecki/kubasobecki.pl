@@ -11,7 +11,7 @@ export default function ProjectSingle({
 }) {
   return (
     <div>
-      <h3>{name}</h3>
+      <h3 className="text-xl">{name}</h3>
       <img src={images.main} alt={name} className="rounded-xl" />
       <p>{date}</p>
       <p>{stack.join(" | ")}</p>
