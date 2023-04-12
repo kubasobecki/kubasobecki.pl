@@ -5,7 +5,7 @@ import {
   AiFillPhone,
   AiOutlineWhatsApp,
 } from "react-icons/ai";
-import { FaTelegramPlane } from "react-icons/fa";
+// import { FaTelegramPlane } from "react-icons/fa";
 import { Tooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 
@@ -88,7 +88,7 @@ export default function Footer() {
             rel="noreferrer"
             className="p-1 text-white/90 duration-300 hover:text-myLime"
           >
-            <FaTelegramPlane size="24" />
+            {/* <FaTelegramPlane size="24" /> */}
           </a>
           <Tooltip id="tooltip-footer-telegram" style={tooltipStyle} />
           <a
