@@ -55,9 +55,9 @@ class ErrorBoundary extends Component<Props, State> {
 
 export default function Footer() {
   return (
-    <ErrorBoundary>
-      <footer className="flex w-full flex-col items-center justify-center gap-y-4 bg-myDark p-8 text-sm text-white dark:bg-black/50 md:flex-row-reverse md:justify-between">
-        <div className="flex space-x-2">
+    <footer className="flex w-full flex-col items-center justify-center gap-y-4 bg-myDark p-8 text-sm text-white dark:bg-black/50 md:flex-row-reverse md:justify-between">
+      <div className="flex space-x-2">
+        <ErrorBoundary>
           <a
             href="https://github.com/kubasobecki/"
             data-tooltip-id="tooltip-footer-github"
@@ -124,11 +124,11 @@ export default function Footer() {
             <AiFillPhone size="24" />
           </a>
           <Tooltip id="tooltip-footer-mobile" style={tooltipStyle} />
-        </div>
-        <span className="text-white/90">
-          © {new Date().getFullYear()} Kuba Sobecki
-        </span>
-      </footer>
-    </ErrorBoundary>
+        </ErrorBoundary>
+      </div>
+      <span className="text-white/90">
+        © {new Date().getFullYear()} Kuba Sobecki
+      </span>
+    </footer>
   );
 }
