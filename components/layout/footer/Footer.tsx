@@ -6,6 +6,7 @@ import {
   AiOutlineWhatsApp,
 } from "react-icons/ai";
 import { FaTelegramPlane } from "react-icons/fa";
+import NoSsr from "./../../helpers/NoSsr";
 import { Tooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 
@@ -64,7 +65,9 @@ export default function Footer() {
           >
             <AiOutlineGithub size="24" />
           </a>
-          {/* <Tooltip id="tooltip-footer-github" style={tooltipStyle} /> */}
+          <NoSsr>
+            <Tooltip id="tooltip-footer-github" style={tooltipStyle} />
+          </NoSsr>
           <a
             href="https://www.linkedin.com/in/kubasobecki/"
             data-tooltip-id="tooltip-footer-linkedin"
@@ -75,7 +78,9 @@ export default function Footer() {
           >
             <AiFillLinkedin size="24" />
           </a>
-          {/* <Tooltip id="tooltip-footer-linkedin" style={tooltipStyle} /> */}
+          <NoSsr>
+            <Tooltip id="tooltip-footer-linkedin" style={tooltipStyle} />
+          </NoSsr>
           <a
             href="https://t.me/KubaSobecki"
             data-tooltip-id="tooltip-footer-telegram"
@@ -86,7 +91,9 @@ export default function Footer() {
           >
             <FaTelegramPlane size="24" />
           </a>
-          {/* <Tooltip id="tooltip-footer-telegram" style={tooltipStyle} /> */}
+          <NoSsr>
+            <Tooltip id="tooltip-footer-telegram" style={tooltipStyle} />
+          </NoSsr>
           <a
             href="https://wa.me/48519676788"
             data-tooltip-id="tooltip-footer-whatsapp"
@@ -97,7 +104,9 @@ export default function Footer() {
           >
             <AiOutlineWhatsApp size="24" />
           </a>
-          {/* <Tooltip id="tooltip-footer-whatsapp" style={tooltipStyle} /> */}
+          <NoSsr>
+            <Tooltip id="tooltip-footer-whatsapp" style={tooltipStyle} />
+          </NoSsr>
           <a
             href="mailto:kubasobecki@gmail.com"
             data-tooltip-id="tooltip-footer-email"
@@ -108,7 +117,9 @@ export default function Footer() {
           >
             <AiFillMail size="24" />
           </a>
-          {/* <Tooltip id="tooltip-footer-email" style={tooltipStyle} /> */}
+          <NoSsr>
+            <Tooltip id="tooltip-footer-email" style={tooltipStyle} />
+          </NoSsr>
           <a
             href="tel:+48519676788"
             data-tooltip-id="tooltip-footer-mobile"
@@ -119,7 +130,9 @@ export default function Footer() {
           >
             <AiFillPhone size="24" />
           </a>
-          {/* <Tooltip id="tooltip-footer-mobile" style={tooltipStyle} /> */}
+          <NoSsr>
+            <Tooltip id="tooltip-footer-mobile" style={tooltipStyle} />
+          </NoSsr>
         </ErrorBoundary>
       </div>
       <span className="text-white/90">
