@@ -1,7 +1,6 @@
 import { ReactNode } from "react";
 import Header from "./header/Header";
 import Footer from "./footer/Footer";
-import NoSsr from "./../helpers/NoSsr";
 
 interface Props {
   showHeader?: boolean;
@@ -20,11 +19,7 @@ export default function Layout({
       <main className="p-8 pt-12">
         <div className="mx-auto max-w-7xl">{children}</div>
       </main>
-      {showFooter && (
-        <NoSsr>
-          <Footer />
-        </NoSsr>
-      )}
+      {showFooter && <Footer />}
     </>
   );
 }
