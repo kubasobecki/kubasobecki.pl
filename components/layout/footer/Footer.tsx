@@ -1,11 +1,11 @@
-// import {
-//   AiOutlineGithub,
-//   AiFillLinkedin,
-//   AiFillMail,
-//   AiFillPhone,
-//   AiOutlineWhatsApp,
-// } from "react-icons/ai";
-// import { FaTelegramPlane } from "react-icons/fa";
+import {
+  AiOutlineGithub,
+  AiFillLinkedin,
+  AiFillMail,
+  AiFillPhone,
+  AiOutlineWhatsApp,
+} from "react-icons/ai";
+import { FaTelegramPlane } from "react-icons/fa";
 import { Tooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 
@@ -62,7 +62,7 @@ export default function Footer() {
             rel="noreferrer"
             className="p-1 text-white/90 duration-300 hover:text-myLime"
           >
-            {/* <AiOutlineGithub size="24" /> */}
+            <AiOutlineGithub size="24" />
           </a>
           {/* <Tooltip id="tooltip-footer-github" style={tooltipStyle} /> */}
           <a
@@ -73,7 +73,7 @@ export default function Footer() {
             rel="noreferrer"
             className="p-1 text-white/90 duration-300 hover:text-myLime"
           >
-            {/* <AiFillLinkedin size="24" /> */}
+            <AiFillLinkedin size="24" />
           </a>
           {/* <Tooltip id="tooltip-footer-linkedin" style={tooltipStyle} /> */}
           <a
@@ -84,7 +84,7 @@ export default function Footer() {
             rel="noreferrer"
             className="p-1 text-white/90 duration-300 hover:text-myLime"
           >
-            {/* <FaTelegramPlane size="24" /> */}
+            <FaTelegramPlane size="24" />
           </a>
           {/* <Tooltip id="tooltip-footer-telegram" style={tooltipStyle} /> */}
           <a
@@ -95,7 +95,7 @@ export default function Footer() {
             rel="noreferrer"
             className="p-1 text-white/90 duration-300 hover:text-myLime"
           >
-            {/* <AiOutlineWhatsApp size="24" /> */}
+            <AiOutlineWhatsApp size="24" />
           </a>
           {/* <Tooltip id="tooltip-footer-whatsapp" style={tooltipStyle} /> */}
           <a
@@ -106,7 +106,7 @@ export default function Footer() {
             rel="noreferrer"
             className="p-1 text-white/90 duration-300 hover:text-myLime"
           >
-            {/* <AiFillMail size="24" /> */}
+            <AiFillMail size="24" />
           </a>
           {/* <Tooltip id="tooltip-footer-email" style={tooltipStyle} /> */}
           <a
@@ -117,7 +117,7 @@ export default function Footer() {
             rel="noreferrer"
             className="p-1 text-white/90 duration-300 hover:text-myLime"
           >
-            {/* <AiFillPhone size="24" /> */}
+            <AiFillPhone size="24" />
           </a>
           {/* <Tooltip id="tooltip-footer-mobile" style={tooltipStyle} /> */}
         </ErrorBoundary>
