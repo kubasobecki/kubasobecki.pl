@@ -1,6 +1,21 @@
+interface FormValues {
+  name: string;
+  email: string;
+  message: string;
+  recaptcha: string;
+}
+
 export const sendContactForm = async (
-  values,
-  { setSubmitting, resetForm, setStatus }
+  values: FormValues,
+  {
+    setSubmitting,
+    resetForm,
+    setStatus,
+  }: {
+    setSubmitting: any;
+    resetForm: any;
+    setStatus: any;
+  }
 ) => {
   const options = {
     method: "POST",
@@ -23,7 +38,7 @@ export const fetchProjects = async () => {
     if (!res.ok) throw new Error("An error occurred, could not get projects");
     const data = await res.json();
     return data;
-  } catch (error) {
+  } catch (error: any) {
     console.error(error.message);
   }
 };

@@ -6,15 +6,14 @@ import { sendContactForm } from "@/utilities/api";
 import toast, { Toaster } from "react-hot-toast";
 import ReCAPTCHA from "react-google-recaptcha";
 
-// const CAPTCHA_SITE_KEY = "6LcQ6RwlAAAAAE9QNNNKXq8OT7tGkjl5tspiQPtt";
-const recaptchaSiteKey = process.env.NEXT_PUBLIC_CAPTCHA_SITE_KEY;
+const recaptchaSiteKey = process.env.NEXT_PUBLIC_CAPTCHA_SITE_KEY || "";
 
 const errorFieldClasses = "ring-1 ring-red-500 focus:ring-red-500";
 const errorMessageClasses =
   "absolute top-0 right-0 bg-red-500 px-2 py-0 text-xs text-white";
 
 export default function ContactForm() {
-  const recaptchaRef = createRef();
+  const recaptchaRef = createRef<ReCAPTCHA>();
 
   const {
     values,
@@ -54,11 +53,10 @@ export default function ContactForm() {
   }, [status]);
 
   return (
-    // <form onSubmit={handleSubmit}>
     <form
       onSubmit={handleSubmit}
       onChange={(e) => {
-        if (!values.recaptcha) recaptchaRef.current.execute();
+        if (!values.recaptcha) recaptchaRef.current?.execute();
         handleChange(e);
       }}
     >
@@ -71,7 +69,7 @@ export default function ContactForm() {
           onChange={handleChange}
           onBlur={handleBlur}
           value={values.name}
-          className={errors.name && touched.name && errorFieldClasses}
+          className={(errors.name && touched.name && errorFieldClasses) || ""}
         />
         {errors.name && touched.name && (
           <div className={errorMessageClasses}>{errors.name}</div>
@@ -87,7 +85,7 @@ export default function ContactForm() {
           onChange={handleChange}
           onBlur={handleBlur}
           value={values.email}
-          className={errors.email && touched.email && errorFieldClasses}
+          className={(errors.email && touched.email && errorFieldClasses) || ""}
         />
         {errors.email && touched.email && (
           <div className={errorMessageClasses}>{errors.email}</div>
@@ -102,7 +100,9 @@ export default function ContactForm() {
           onChange={handleChange}
           onBlur={handleBlur}
           value={values.message}
-          className={errors.name && touched.message && errorFieldClasses}
+          className={
+            (errors.name && touched.message && errorFieldClasses) || ""
+          }
         />
         {errors.message && touched.message && (
           <div className={errorMessageClasses}>{errors.message}</div>

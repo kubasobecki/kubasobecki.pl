@@ -1,4 +1,9 @@
-export const generateEmailContent = (data) => {
+export const generateEmailContent = (data: {
+  name: string;
+  email: string;
+  message: string;
+  recaptcha: string;
+}) => {
   const textData = Object.entries(data).reduce(
     (str, [key, val]) =>
       str + `${key[0].toUpperCase() + key.slice(1)}: \n${val} \n \n`,

@@ -1,4 +1,4 @@
-import Layout from "@/components/layout/layout";
+import Layout from "@/components/layout/Layout";
 import Link from "next/dist/client/link";
 
 export default function Custom404() {

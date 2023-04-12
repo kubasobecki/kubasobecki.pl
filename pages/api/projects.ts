@@ -1,3 +1,5 @@
+import { NextApiRequest, NextApiResponse } from "next/types";
+
 const projectsArray = [
   {
     id: 1,
@@ -157,7 +159,10 @@ const projectsArray = [
   },
 ];
 
-export default async function projectsHandler(req, res) {
+export default async function projectsHandler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   if (req.method !== "GET")
     return res.status(400).json({ message: "Bad request 💩" });
 

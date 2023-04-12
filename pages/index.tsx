@@ -1,6 +1,7 @@
 import Layout from "@/components/layout/Layout";
 import { useAppSelector } from "@/utilities/hooks";
 import Head from "next/head";
+import { RootState } from "@/store/store";
 
 export default function Home() {
   const { theme } = useAppSelector((state: RootState) => state);
@@ -76,25 +77,29 @@ export default function Home() {
           <h1 className="">_this website</h1>
           <p>is built with:</p>
           <div className="flex space-x-8">
-            <a href="https://react.dev/" target="_blank">
+            <a href="https://react.dev/" target="_blank" rel="noreferrer">
               React
             </a>
-            <a href="https://nextjs.org/" target="_blank">
+            <a href="https://nextjs.org/" target="_blank" rel="noreferrer">
               Next.js
             </a>
-            <a href="https://tailwindcss.com/" target="_blank">
+            <a href="https://tailwindcss.com/" target="_blank" rel="noreferrer">
               TailwindCSS
             </a>
-            <a href="https://formik.org/" target="_blank">
+            <a href="https://formik.org/" target="_blank" rel="noreferrer">
               Formik
             </a>
-            <a href="https://lodash.com/" target="_blank">
+            <a href="https://lodash.com/" target="_blank" rel="noreferrer">
               Lodash
             </a>
-            <a href="https://nodemailer.com/" target="_blank">
+            <a href="https://nodemailer.com/" target="_blank" rel="noreferrer">
               Nodemailer
             </a>
-            <a href="https://react-hot-toast.com/" target="_blank">
+            <a
+              href="https://react-hot-toast.com/"
+              target="_blank"
+              rel="noreferrer"
+            >
               react-hot-toast
             </a>
           </div>

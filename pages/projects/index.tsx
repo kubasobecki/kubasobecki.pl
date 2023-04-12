@@ -13,7 +13,7 @@ export default function Projects() {
 
   useEffect(() => {
     dispatch(fetchProjectsThunk());
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     console.log(projects);
@@ -63,7 +63,8 @@ export default function Projects() {
                   {projects.entries
                     .filter(
                       ({ tags }) =>
-                        projects.filter === "" || tags.includes(projects.filter)
+                        projects.filter === "" ||
+                        tags!.includes(projects.filter)
                     )
                     .map((props) => (
                       <ProjectSingle key={props.id} {...props} />
