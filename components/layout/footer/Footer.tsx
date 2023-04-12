@@ -92,7 +92,7 @@ export default function Footer() {
         >
           <AiFillPhone size="24" />
         </a>
-        <Tooltip id="tooltip-footer-mobile" style={tooltipStyle} />
+        {/* <Tooltip id="tooltip-footer-mobile" style={tooltipStyle} /> */}
       </div>
       <span className="text-white/90">
         © {new Date().getFullYear()} Kuba Sobecki
