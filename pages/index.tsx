@@ -49,7 +49,7 @@ export default function Home() {
         <title>kubasobecki.pl | home</title>
       </Head>
       <ErrorBoundary>
-        <Layout>
+        <Layout showFooter={false}>
           <section className="mx-auto max-w-7xl text-lg">
             <h1 className="">_story</h1>
             <p>
