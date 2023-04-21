@@ -210,26 +210,31 @@ section {
   content: "";
   display: block;
   position: absolute;
-  top: -12px;
+  top: -24px;
   left: 0;
   width: 50%;
-  height: 12px;
+  height: 24px;
+  background-color: inherit;
 }
 
 .section__decor--cyan:before {
-  background: var(--my-hex-cyan);
+  background-color: var(--my-hex-cyan);
 }
 
 .section__decor--magenta:before {
-  background: var(--my-hex-magenta);
+  background-color: var(--my-hex-magenta);
 }
 
 .section__decor--lime:before {
-  background: var(--my-hex-lime);
+  background-color: var(--my-hex-lime);
 }
 
 .section__decor--dark:before {
-  background: var(--my-hex-dark);
+  background-color: var(--my-hex-dark);
+}
+
+.section__decor--light:before {
+  @apply bg-zinc-300;
 }
 
 /***** LISTS *****/

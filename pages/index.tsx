@@ -88,7 +88,7 @@ export default function Home() {
           </svg> */}
         </section>
 
-        <section className="section__decor section__decor--dark">
+        <section className="section__decor bg-slate-100 dark:bg-myDark">
           <h1 className="">Bio</h1>
           {/* <p>
             My professional career started some{" "}
@@ -116,7 +116,7 @@ export default function Home() {
           </p>
         </section>
 
-        <section className="">
+        <section className="section__decor bg-myLime dark:text-myDark">
           <h1 className="">Services</h1>
           <h5>The scope of my services covers: </h5>
           <ul className="bulletlist">
@@ -131,7 +131,7 @@ export default function Home() {
           </ul>
         </section>
 
-        <section className="">
+        <section className="section__decor bg-slate-100 dark:bg-myDark">
           <h1 className="">Stack</h1>
           <h5>Technologies I work with include:</h5>
           <ul className="bulletlist">
@@ -154,7 +154,7 @@ export default function Home() {
           </ul>
         </section>
 
-        <section className="">
+        <section className="section__decor bg-slate-100 dark:bg-myDark">
           <h1 className="">Brands</h1>
           <p>
             Through the years I've worked with global brands, offices, agencies
@@ -814,7 +814,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="">
+        <section className="section__decor bg-slate-100 dark:bg-myDark">
           <p>This website is built with:</p>
           <div className="flex space-x-8">
             <a href="https://react.dev/" target="_blank" rel="noreferrer">
@@ -845,7 +845,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="">
+        <section className="section__decor bg-slate-100 dark:bg-myDark">
           <p>
             If you like my work, feel free to contact me. I’m always open for
             new job opportunities.
