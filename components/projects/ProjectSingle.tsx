@@ -17,7 +17,7 @@ export default function ProjectSingle({
       animate={{ opacity: 1 }}
       initial={{ opacity: 0 }}
       exit={{ opacity: 0 }}
-      transition={{ type: "spring", duration: 0.4 }}
+      transition={{ type: "tween", duration: 0.25 }}
     >
       <h3 className="text-xl">{name}</h3>
       <img src={images?.main} alt={name} className="rounded-xl" />

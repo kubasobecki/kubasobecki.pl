@@ -37,7 +37,7 @@ export default function Contact() {
               data-tooltip-content="GitHub"
               target="_blank"
               rel="noreferrer"
-              className="p-1 text-myDark duration-300 hover:text-myLime dark:text-zinc-400 dark:hover:text-myLime"
+              className="p-1 text-myDark duration-300 hover:text-myDark/60 dark:text-zinc-400 dark:hover:text-zinc-400/50"
             >
               <AiOutlineGithub size="36" />
             </a>
@@ -48,7 +48,7 @@ export default function Contact() {
               data-tooltip-content="LinkedIn"
               target="_blank"
               rel="noreferrer"
-              className="p-1 text-myDark duration-300 hover:text-myLime dark:text-zinc-400 dark:hover:text-myLime"
+              className="p-1 text-myDark duration-300 hover:text-myDark/60 dark:text-zinc-400 dark:hover:text-zinc-400/50"
             >
               <AiFillLinkedin size="36" />
             </a>
@@ -59,7 +59,7 @@ export default function Contact() {
               data-tooltip-content="Telegram"
               target="_blank"
               rel="noreferrer"
-              className="p-1 text-myDark duration-300 hover:text-myLime dark:text-zinc-400 dark:hover:text-myLime"
+              className="p-1 text-myDark duration-300 hover:text-myDark/60 dark:text-zinc-400 dark:hover:text-zinc-400/50"
             >
               <FaTelegramPlane size="36" />
             </a>
@@ -70,7 +70,7 @@ export default function Contact() {
               data-tooltip-content="WhatsApp"
               target="_blank"
               rel="noreferrer"
-              className="p-1 text-myDark duration-300 hover:text-myLime dark:text-zinc-400 dark:hover:text-myLime"
+              className="p-1 text-myDark duration-300 hover:text-myDark/60 dark:text-zinc-400 dark:hover:text-zinc-400/50"
             >
               <AiOutlineWhatsApp size="36" />
             </a>
@@ -81,7 +81,7 @@ export default function Contact() {
               data-tooltip-content="Email"
               target="_blank"
               rel="noreferrer"
-              className="p-1 text-myDark duration-300 hover:text-myLime dark:text-zinc-400 dark:hover:text-myLime"
+              className="p-1 text-myDark duration-300 hover:text-myDark/60 dark:text-zinc-400 dark:hover:text-zinc-400/50"
             >
               <AiFillMail size="36" />
             </a>
@@ -92,7 +92,7 @@ export default function Contact() {
               data-tooltip-content="Mobile"
               target="_blank"
               rel="noreferrer"
-              className="p-1 text-myDark duration-300 hover:text-myLime dark:text-zinc-400 dark:hover:text-myLime"
+              className="p-1 text-myDark duration-300 hover:text-myDark/60 dark:text-zinc-400 dark:hover:text-zinc-400/50"
             >
               <AiFillPhone size="36" />
             </a>

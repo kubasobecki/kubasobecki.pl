@@ -21,6 +21,7 @@ module.exports = {
         myDark: "hsl(var(--my-dark) / <alpha-value>)", // #18181B
       },
       gridTemplateColumns: {
+        auto200: "repeat(auto-fit, minmax(200px, 1fr))",
         auto250: "repeat(auto-fit, minmax(250px, 1fr))",
       },
     },
