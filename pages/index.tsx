@@ -2,9 +2,37 @@ import Layout from "@/components/layout/Layout";
 import { useAppSelector } from "@/utilities/hooks";
 import Head from "next/head";
 import { RootState } from "@/store/store";
+import { useEffect } from "react";
 
 export default function Home() {
   const { theme } = useAppSelector((state: RootState) => state);
+
+  useEffect(() => {
+    //     console.log(`
+    //   -------------------------------------
+    //   TG9va2luZyBhdCBzb3VyY2UgY29kZT8gTWF5Y
+    //   mUgeW91J3JlIHRoZSBraW5kIG9mIHBlcnNvbi
+    //   B3aG8gd291bGQgZW5qb3kgd29ya2luZyB3aXR
+    //   oIG1lISBrdWJhc29iZWNraUBnbWFpbC5jb20=
+    //   -------------------------------------
+    //         /
+    //  (\\_/) /
+    // (='.'=)
+    // (")_(")
+    //   `);
+
+    console.log(`
+   ,_,
+  (O,O)
+  (   )
+---"-"-------------------------------
+TG9va2luZyBhdCBzb3VyY2UgY29kZT8gTWF5Y
+mUgeW91J3JlIHRoZSBraW5kIG9mIHBlcnNvbi
+B3aG8gd291bGQgZW5qb3kgd29ya2luZyB3aXR
+oIG1lISBrdWJhc29iZWNraUBnbWFpbC5jb20=
+-------------------------------------
+  `);
+  }, []);
 
   return (
     <>
@@ -119,7 +147,7 @@ export default function Home() {
         <section className="section__decor bg-myLime dark:text-myDark">
           <h1 className="">Services</h1>
           <h5>The scope of my services covers: </h5>
-          <ul className="bulletlist">
+          <ul className="bulletlist bulletlist--dark">
             <li>Corporate identity</li>
             <li>Logo design</li>
             <li>Rebranding</li>
@@ -127,7 +155,8 @@ export default function Home() {
             <li>Packaging design</li>
             <li>Publication graphics design</li>
             <li>Website design</li>
-            <li>Web/Software development.</li>
+            <li>Web/Software development</li>
+            <li>Frontend Development</li>
           </ul>
         </section>
 
@@ -155,7 +184,7 @@ export default function Home() {
         </section>
 
         <section className="section__decor bg-slate-100 dark:bg-myDark">
-          <h1 className="">Brands</h1>
+          <h1 className="">Brands I worked with</h1>
           <p>
             Through the years I've worked with global brands, offices, agencies
             and companies of any size.
