@@ -2,10 +2,85 @@ import Layout from "@/components/layout/Layout";
 import { useAppSelector } from "@/utilities/hooks";
 import Head from "next/head";
 import { RootState } from "@/store/store";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
+import * as THREE from "three";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+import { useDevicePixelRatio } from "use-device-pixel-ratio";
+
+interface Window {
+  devicePixelRatio: number;
+}
 
 export default function Home() {
   const { theme } = useAppSelector((state: RootState) => state);
+  const three = useRef<HTMLHeadingElement>(null);
+  const dpr = useDevicePixelRatio();
+
+  useEffect(() => {
+    const threeElement = three;
+    const scene = new THREE.Scene();
+
+    // Camera
+    const camera = new THREE.PerspectiveCamera(
+      75,
+      threeElement.current!.clientWidth / threeElement.current!.clientHeight,
+      0.1,
+      1000
+    );
+    camera.position.setZ(15);
+
+    // Lights
+    const pointLight = new THREE.PointLight(0xffffff);
+    pointLight.position.set(-5, 5, 5);
+
+    const ambientLight = new THREE.AmbientLight(0xffffff);
+    ambientLight.intensity = 0.25;
+    const renderer = new THREE.WebGLRenderer(dpr);
+
+    renderer.setSize(
+      threeElement.current!.clientWidth,
+      threeElement.current!.clientHeight
+    );
+    threeElement.current!.append(renderer.domElement);
+
+    scene.add(pointLight, ambientLight);
+
+    // Geometry
+    function addCell(x: number, y: number, z: number) {
+      const geometry = new THREE.BoxGeometry(1, 1, 1);
+      const material = new THREE.MeshStandardMaterial({ color: 0xadff16 });
+      const cube = new THREE.Mesh(geometry, material);
+      cube.position.set(x, y, z);
+
+      scene.add(cube);
+    }
+    addCell(1, 1, 1);
+
+    // Helpers
+    const lightHelper = new THREE.PointLightHelper(pointLight);
+    const gridHelper = new THREE.GridHelper(100, 100);
+    const controls = new OrbitControls(camera, renderer.domElement);
+    scene.add(lightHelper, gridHelper);
+
+    // Animate
+    function animate() {
+      requestAnimationFrame(animate);
+
+      // cube.rotation.x += 0.01;
+      // cube.rotation.y += 0.005;
+      // cube.rotation.z += 0.01;
+
+      controls.update();
+
+      renderer.render(scene, camera);
+    }
+
+    animate();
+
+    return () => {
+      threeElement.current!.innerHTML = "";
+    };
+  }, []);
 
   useEffect(() => {
     console.log(
@@ -29,10 +104,11 @@ oIG1lISBrdWJhc29iZWNraUBnbWFpbC5jb20=
       </Head>
       <Layout>
         <section className="relative flex min-h-[50dvh] max-w-full flex-col justify-center bg-myLime py-24 text-myDark">
-          <canvas
+          <div
+            ref={three}
             id="three"
             className="absolute inset-0 bottom-0 h-full w-full"
-          ></canvas>
+          ></div>
           <h3 className="font-mono text-2xl uppercase">Hi, my name is Kuba</h3>
           <h1 className="font-sans text-6xl">I make websites</h1>
           {/* <svg
