@@ -8,7 +8,7 @@ export default function Blog() {
         <title>kubasobecki.pl | blog</title>
       </Head>
       <Layout>
-        <h1 className="">Blog</h1>
+        <h1 className="page-heading">Blog</h1>
       </Layout>
     </>
   );

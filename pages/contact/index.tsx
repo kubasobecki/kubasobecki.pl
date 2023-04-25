@@ -28,7 +28,7 @@ export default function Contact() {
       </Head>
       <Layout>
         <div className="mx-auto max-w-md">
-          <h1 className="mb-16 text-center">Let's talk</h1>
+          <h1 className="page-heading text-center">Let's talk</h1>
 
           <div className="mb-8 flex justify-center space-x-8">
             <a

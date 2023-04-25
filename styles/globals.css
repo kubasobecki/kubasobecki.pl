@@ -141,19 +141,19 @@
   }
 
   h1 {
-    @apply mb-4 text-6xl;
+    @apply mb-8 text-6xl;
   }
 
   h2 {
-    @apply mb-3 text-5xl;
+    @apply mb-8 text-5xl;
   }
 
   h3 {
-    @apply mb-3 text-4xl;
+    @apply mb-6 text-4xl;
   }
 
   h4 {
-    @apply mb-3 text-3xl;
+    @apply mb-4 text-3xl;
   }
 
   h5 {
@@ -165,7 +165,7 @@
   }
 
   p {
-    @apply mb-4;
+    @apply mb-8;
   }
 }
 
@@ -200,10 +200,16 @@
   }
 }
 
+/***** HEADINGS *****/
+
+.page-heading {
+  @apply px-8 py-16;
+}
+
 /***** SECTIONS *****/
 
 section {
-  @apply relative mx-auto max-w-7xl px-8 py-12 text-lg;
+  @apply relative mx-auto max-w-7xl px-8 pt-32 pb-40 text-lg;
 }
 
 .section__decor:before {
@@ -295,6 +301,30 @@ section {
 
 .toast-error {
   @apply bg-myMagenta/80 text-sm font-bold text-white shadow-lg backdrop-blur-sm !important;
+}
+
+/********** NEONS **********/
+
+.neon--cyan {
+  color: white;
+  text-shadow: 0 0 0.033em #fff, 0 0 0.08em #fff, 0 0 0.1em var(--my-hex-cyan),
+    0 0 0.2em var(--my-hex-cyan), 0 0 0.3em var(--my-hex-cyan),
+    0 0 1em var(--my-hex-cyan), 0 0 1.5em var(--my-hex-cyan);
+}
+
+.neon--magenta {
+  color: white;
+  text-shadow: 0 0 0.033em #fff, 0 0 0.08em #fff,
+    0 0 0.1em var(--my-hex-magenta), 0 0 0.2em var(--my-hex-magenta),
+    0 0 0.3em var(--my-hex-magenta), 0 0 1em var(--my-hex-magenta),
+    0 0 1.5em var(--my-hex-magenta);
+}
+
+.neon--lime {
+  color: white;
+  text-shadow: 0 0 0.033em #fff, 0 0 0.08em #fff, 0 0 0.1em var(--my-hex-lime),
+    0 0 0.2em var(--my-hex-lime), 0 0 0.3em var(--my-hex-lime),
+    0 0 1em var(--my-hex-lime), 0 0 1.5em var(--my-hex-lime);
 }
 
 /********** COMPONENTS **********/

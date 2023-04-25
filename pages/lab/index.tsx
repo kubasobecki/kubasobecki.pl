@@ -8,7 +8,7 @@ export default function Lab() {
         <title>kubasobecki.pl | lab</title>
       </Head>
       <Layout>
-        <h1 className="">Lab</h1>
+        <h1 className="page-heading">Lab</h1>
       </Layout>
     </>
   );

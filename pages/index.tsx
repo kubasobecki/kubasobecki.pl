@@ -8,21 +8,8 @@ export default function Home() {
   const { theme } = useAppSelector((state: RootState) => state);
 
   useEffect(() => {
-    //     console.log(`
-    //   -------------------------------------
-    //   TG9va2luZyBhdCBzb3VyY2UgY29kZT8gTWF5Y
-    //   mUgeW91J3JlIHRoZSBraW5kIG9mIHBlcnNvbi
-    //   B3aG8gd291bGQgZW5qb3kgd29ya2luZyB3aXR
-    //   oIG1lISBrdWJhc29iZWNraUBnbWFpbC5jb20=
-    //   -------------------------------------
-    //         /
-    //  (\\_/) /
-    // (='.'=)
-    // (")_(")
-    //   `);
-
-    console.log(`
-   ,_,
+    console.log(
+      `%c   ,_,
   (O,O)
   (   )
 ---"-"-------------------------------
@@ -30,8 +17,9 @@ TG9va2luZyBhdCBzb3VyY2UgY29kZT8gTWF5Y
 mUgeW91J3JlIHRoZSBraW5kIG9mIHBlcnNvbi
 B3aG8gd291bGQgZW5qb3kgd29ya2luZyB3aXR
 oIG1lISBrdWJhc29iZWNraUBnbWFpbC5jb20=
--------------------------------------
-  `);
+-------------------------------------`,
+      "\n font-family: monospace; \n color: #ADFF16"
+    );
   }, []);
 
   return (
@@ -40,7 +28,11 @@ oIG1lISBrdWJhc29iZWNraUBnbWFpbC5jb20=
         <title>kubasobecki.pl | home</title>
       </Head>
       <Layout>
-        <section className="flex min-h-[50dvh] max-w-full flex-col justify-center bg-myLime py-24 text-myDark">
+        <section className="relative flex min-h-[50dvh] max-w-full flex-col justify-center bg-myLime py-24 text-myDark">
+          <canvas
+            id="three"
+            className="absolute inset-0 bottom-0 h-full w-full"
+          ></canvas>
           <h3 className="font-mono text-2xl uppercase">Hi, my name is Kuba</h3>
           <h1 className="font-sans text-6xl">I make websites</h1>
           {/* <svg
@@ -118,29 +110,32 @@ oIG1lISBrdWJhc29iZWNraUBnbWFpbC5jb20=
 
         <section className="section__decor bg-slate-100 dark:bg-myDark">
           <h1 className="">Bio</h1>
-          {/* <p>
-            My professional career started some{" "}
-            {new Date().getFullYear() - 2002} years ago after I've built my
-            first personal website in Macromedia Flash. What was just for fun
-            originally, got me into full-time job.
-          </p> */}
-
-          <p>
-            For the last {new Date().getFullYear() - 2013} years I have been
-            designing, building and maintaining websites as well as other
-            solutions for businesses using HTML/CSS/JS and WordPress.
+          <p className="">
+            Drawing on {new Date().getFullYear() - 2002} years of experience in
+            design, I am a <strong>web developer</strong> with a discerning eye
+            for aesthetics, strong attention to detail, and passion for quality.
+            Having made a gradual transition from design to full-time web
+            development, I bring a unique blend of creativity and technical
+            proficiency to every project.
           </p>
-
-          <p>
-            I’ve also been a graphic designer for the last{" "}
-            {new Date().getFullYear() - 2002} years of experience as a graphic
-            designer under my belt and a highly developed aesthetic and
-            functional sense, great attention to detail and passion for quality.
+          <p className="">
+            For the past decade, I have specialized in WordPress-based web
+            design, building and managing websites, and custom business
+            solutions. However, my passion for continuous growth and development
+            led me to explore JavaScript and its ecosystem, which I have been
+            focusing on for the past {new Date().getFullYear() - 2021} years.
           </p>
-
-          <p>
-            A born enthusiast, perfectionist, self-taught professional who loves
-            new challenges and does not stop in endless self-development.
+          <p className="">
+            As an enthusiastic self-taught professional, I possess a
+            perfectionist mindset that drives me to continuously improve my
+            skills. My passion for problem-solving empowers me to tackle new
+            challenges with a can-do attitude.
+          </p>
+          <p className="">
+            While thriving in my current role as a full-time freelance web
+            developer, I am enthusiastic to explore new opportunities that would
+            help propel my career growth to new heights and contribute my
+            expertise to a dynamic team.
           </p>
         </section>
 
@@ -148,15 +143,21 @@ oIG1lISBrdWJhc29iZWNraUBnbWFpbC5jb20=
           <h1 className="">Services</h1>
           <h5>The scope of my services covers: </h5>
           <ul className="bulletlist bulletlist--dark">
-            <li>Corporate identity</li>
-            <li>Logo design</li>
-            <li>Rebranding</li>
-            <li>Company and product naming</li>
-            <li>Packaging design</li>
-            <li>Publication graphics design</li>
-            <li>Website design</li>
-            <li>Web/Software development</li>
-            <li>Frontend Development</li>
+            <li>Web Development</li>
+            <li>Web Applications</li>
+            <li>CMS Websites</li>
+            <li>API Development</li>
+            {/* <li>PWA Development</li> */}
+            <li>Website Maintenance & Support</li>
+            <li>Hosting & Server Management</li>
+            <li>Performance Optimization</li>
+            <li>Accessibility Auditing</li>
+            <li>Project Management & Consulting</li>
+            <li>UI/UX Design</li>
+            <li>Prototyping</li>
+            <li>Branding & Concept</li>
+            <li>Company & Product Naming</li>
+            <li>Publication Design</li>
           </ul>
         </section>
 

@@ -25,7 +25,7 @@ export default function Projects() {
         <title>kubasobecki.pl | projects</title>
       </Head>
       <Layout>
-        <h1 className="">Projects</h1>
+        <h1 className="page-heading">Projects</h1>
 
         {/* <section>
           <p>
@@ -50,11 +50,8 @@ export default function Projects() {
         {projects.status === "loading" && "Loading projects..."}
         {projects.status === "succeeded" && (
           <>
-            <section id="projects-filter">
+            <section id="projects-grid" className="pt-0">
               <ProjectsFilter projects={projects.entries} />
-            </section>
-
-            <section id="projects-grid">
               <motion.div
                 layout
                 className="grid grid-cols-auto250 gap-x-4 gap-y-8"
