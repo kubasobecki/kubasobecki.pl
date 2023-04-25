@@ -13,12 +13,16 @@ interface Window {
 
 export default function Home() {
   const { theme } = useAppSelector((state: RootState) => state);
-  const three = useRef<HTMLHeadingElement>(null);
+  const three = useRef<HTMLDivElement>(null);
   const dpr = useDevicePixelRatio();
 
   useEffect(() => {
+    if (!three) return;
+
     const threeElement = three;
     const scene = new THREE.Scene();
+    const sceneTexture = new THREE.TextureLoader().load("");
+    // scene.background = sceneTexture;
 
     // Camera
     const camera = new THREE.PerspectiveCamera(
@@ -35,24 +39,62 @@ export default function Home() {
 
     const ambientLight = new THREE.AmbientLight(0xffffff);
     ambientLight.intensity = 0.25;
-    const renderer = new THREE.WebGLRenderer(dpr);
+
+    const light = new THREE.DirectionalLight(0xffffff, 1);
+    light.position.setScalar(1);
+
+    // Renderer
+    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+    renderer.setPixelRatio(dpr);
 
     renderer.setSize(
       threeElement.current!.clientWidth,
       threeElement.current!.clientHeight
     );
     threeElement.current!.append(renderer.domElement);
+    renderer.setClearColor(0xffffff, 1);
 
     scene.add(pointLight, ambientLight);
 
     // Geometry
     function addCell(x: number, y: number, z: number) {
-      const geometry = new THREE.BoxGeometry(1, 1, 1);
-      const material = new THREE.MeshStandardMaterial({ color: 0xadff16 });
-      const cube = new THREE.Mesh(geometry, material);
-      cube.position.set(x, y, z);
+      // Sharp box
+      // const geometry = new THREE.BoxGeometry(1, 1, 1);
+      // const material = new THREE.MeshStandardMaterial({ color: 0xadff16 });
+      // const cube = new THREE.Mesh(geometry, material);
+      // cube.position.set(x, y, z);
+      // scene.add(cube);
 
-      scene.add(cube);
+      // Rounded box
+      const shape = new THREE.Shape();
+      const angleStep = Math.PI * 0.5;
+      const radius = 0.25;
+
+      shape.absarc(0.25, 0.25, radius, angleStep * 0, angleStep * 1, false);
+      shape.absarc(-0.25, 0.25, radius, angleStep * 1, angleStep * 2, false);
+      shape.absarc(-0.25, -0.25, radius, angleStep * 2, angleStep * 3, false);
+      shape.absarc(0.25, -0.25, radius, angleStep * 3, angleStep * 4, false);
+
+      const g = new THREE.ExtrudeGeometry(shape, {
+        depth: 0.5,
+        bevelEnabled: true,
+        bevelThickness: 0.05,
+        bevelSize: 0.05,
+        bevelSegments: 20,
+        curveSegments: 20,
+      });
+      g.center();
+      g.rotateX(Math.PI * -0.5);
+
+      const m = new THREE.MeshStandardMaterial({
+        color: 0xadff16,
+        // envMap: textureCube,
+        // metalness: 1,
+        roughness: 0.25,
+      });
+      const cell = new THREE.Mesh(g, m);
+      console.dir(cell);
+      scene.add(cell);
     }
     addCell(1, 1, 1);
 
@@ -80,8 +122,9 @@ export default function Home() {
     return () => {
       threeElement.current!.innerHTML = "";
     };
-  }, []);
+  }, [three, dpr]);
 
+  // Easter egg
   useEffect(() => {
     console.log(
       `%c   ,_,
