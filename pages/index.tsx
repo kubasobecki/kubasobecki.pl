@@ -3,126 +3,10 @@ import { useAppSelector } from "@/utilities/hooks";
 import Head from "next/head";
 import { RootState } from "@/store/store";
 import { useEffect, useRef } from "react";
-import * as THREE from "three";
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-import { useDevicePixelRatio } from "use-device-pixel-ratio";
-
-interface Window {
-  devicePixelRatio: number;
-}
+import Hero from "@/components/3d/Hero";
 
 export default function Home() {
   const { theme } = useAppSelector((state: RootState) => state);
-  const three = useRef<HTMLDivElement>(null);
-  const dpr = useDevicePixelRatio();
-
-  useEffect(() => {
-    if (!three) return;
-
-    const threeElement = three;
-    const scene = new THREE.Scene();
-    const sceneTexture = new THREE.TextureLoader().load("");
-    // scene.background = sceneTexture;
-
-    // Camera
-    const camera = new THREE.PerspectiveCamera(
-      75,
-      threeElement.current!.clientWidth / threeElement.current!.clientHeight,
-      0.1,
-      1000
-    );
-    camera.position.setZ(15);
-
-    // Lights
-    const pointLight = new THREE.PointLight(0xffffff);
-    pointLight.position.set(-5, 5, 5);
-
-    const ambientLight = new THREE.AmbientLight(0xffffff);
-    ambientLight.intensity = 0.25;
-
-    const light = new THREE.DirectionalLight(0xffffff, 1);
-    light.position.setScalar(1);
-
-    // Renderer
-    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-    renderer.setPixelRatio(dpr);
-
-    renderer.setSize(
-      threeElement.current!.clientWidth,
-      threeElement.current!.clientHeight
-    );
-    threeElement.current!.append(renderer.domElement);
-    renderer.setClearColor(0xffffff, 1);
-
-    scene.add(pointLight, ambientLight);
-
-    // Geometry
-    function addCell(x: number, y: number, z: number) {
-      // Sharp box
-      // const geometry = new THREE.BoxGeometry(1, 1, 1);
-      // const material = new THREE.MeshStandardMaterial({ color: 0xadff16 });
-      // const cube = new THREE.Mesh(geometry, material);
-      // cube.position.set(x, y, z);
-      // scene.add(cube);
-
-      // Rounded box
-      const shape = new THREE.Shape();
-      const angleStep = Math.PI * 0.5;
-      const radius = 0.25;
-
-      shape.absarc(0.25, 0.25, radius, angleStep * 0, angleStep * 1, false);
-      shape.absarc(-0.25, 0.25, radius, angleStep * 1, angleStep * 2, false);
-      shape.absarc(-0.25, -0.25, radius, angleStep * 2, angleStep * 3, false);
-      shape.absarc(0.25, -0.25, radius, angleStep * 3, angleStep * 4, false);
-
-      const g = new THREE.ExtrudeGeometry(shape, {
-        depth: 0.5,
-        bevelEnabled: true,
-        bevelThickness: 0.05,
-        bevelSize: 0.05,
-        bevelSegments: 20,
-        curveSegments: 20,
-      });
-      g.center();
-      g.rotateX(Math.PI * -0.5);
-
-      const m = new THREE.MeshStandardMaterial({
-        color: 0xadff16,
-        // envMap: textureCube,
-        // metalness: 1,
-        roughness: 0.25,
-      });
-      const cell = new THREE.Mesh(g, m);
-      console.dir(cell);
-      scene.add(cell);
-    }
-    addCell(1, 1, 1);
-
-    // Helpers
-    const lightHelper = new THREE.PointLightHelper(pointLight);
-    const gridHelper = new THREE.GridHelper(100, 100);
-    const controls = new OrbitControls(camera, renderer.domElement);
-    scene.add(lightHelper, gridHelper);
-
-    // Animate
-    function animate() {
-      requestAnimationFrame(animate);
-
-      // cube.rotation.x += 0.01;
-      // cube.rotation.y += 0.005;
-      // cube.rotation.z += 0.01;
-
-      controls.update();
-
-      renderer.render(scene, camera);
-    }
-
-    animate();
-
-    return () => {
-      threeElement.current!.innerHTML = "";
-    };
-  }, [three, dpr]);
 
   // Easter egg
   useEffect(() => {
@@ -147,11 +31,7 @@ oIG1lISBrdWJhc29iZWNraUBnbWFpbC5jb20=
       </Head>
       <Layout>
         <section className="relative flex min-h-[50dvh] max-w-full flex-col justify-center bg-myLime py-24 text-myDark">
-          <div
-            ref={three}
-            id="three"
-            className="absolute inset-0 bottom-0 h-full w-full"
-          ></div>
+          <Hero />
           <h3 className="font-mono text-2xl uppercase">Hi, my name is Kuba</h3>
           <h1 className="font-sans text-6xl">I make websites</h1>
           {/* <svg
