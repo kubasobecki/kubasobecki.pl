@@ -15,6 +15,12 @@ function createScene() {
   return scene;
 }
 
+const initial = {
+  rows: 10,
+  columns: 10,
+  density: 0.33,
+};
+
 function createCamera(
   heroContainer: HTMLElement,
   position: [number, number, number]
@@ -57,37 +63,51 @@ function createRenderer(heroContainer: HTMLElement, dpr: number) {
   return renderer;
 }
 
-function createInitialCellArray(sizeX = 10, sizeY = 10, density = 0.5) {
-  if (density < 0 || density > 1)
-    throw new Error("Array density must be in range 0 to 1");
-
-  const targetNum = sizeX * sizeY * density;
+function generateInitialEpoch() {
+  const targetNum = initial.rows * initial.columns * initial.density;
 
   // Use set of strings to produce unique co-ordinates
   const set = new Set<string>();
 
   while (set.size < targetNum) {
     const newCoords = `${Math.round(
-      Math.random() * sizeX - sizeX / 2
-    )},${Math.round(Math.random() * sizeY - sizeY / 2)}`;
+      Math.random() * (initial.rows - 1)
+    )},${Math.round(Math.random() * (initial.columns - 1))}`;
 
     if (!set.has(newCoords)) set.add(newCoords);
   }
 
   // Convert strings to actual co-ordinates
-  const result = Array.from(set).map((coords) =>
-    coords.split(",").map((v) => Number(v))
-  );
+  const orderedList = Array.from(set)
+    .map((coords) => coords.split(",").map((v) => Number(v)))
+    .sort((a: number[], b: number[]) => {
+      if (a[0] - b[0] > 0) return 1;
+      if (a[0] - b[0] < 0) return -1;
+      if (a[0] - b[0] === 0) {
+        if (a[1] - b[1] > 0) return 1;
+        if (a[1] - b[1] < 0) return -1;
+      }
+      return 0;
+    });
 
-  return result;
+  // Helper for visualizing the grid
+  for (let y = 0; y < initial.columns; y++) {
+    const row = orderedList.filter((cell) => cell[1] === y);
+    // console.log(row);
+    const rowText = Array(initial.rows).fill("-");
+    // console.log(rowText);
+    row.forEach((cell) => {
+      rowText[cell[0]] = "o";
+    });
+    console.log(rowText.join(""));
+  }
+
+  return orderedList;
 }
 
-function updateCellArray(
-  scene: THREE.Scene,
-  array: [number, number, number][]
-) {
+function generateNextEpoch(currentEpoch: [number, number][]) {
   //
-  const newArray: [number, number, number][] = [];
+  const newArray: [number, number][] = [];
 
   // scene.getObjectByName("");
 
@@ -172,14 +192,17 @@ export default function Hero() {
 
     const renderer = createRenderer(heroContainer.current!, dpr);
 
-    createInitialCellArray(20, 20, 0.33).forEach(([x, z]) => {
-      const cell = createCell(x, 0, z);
-      scene.add(cell);
+    // populate grid with initial array
+    const firstEpoch = generateInitialEpoch();
+    firstEpoch.forEach(([x, z]) => {
+      scene.add(createCell(x, 0, z));
     });
+
+    console.log(scene);
 
     // Helpers
     const controls = new OrbitControls(camera, renderer.domElement);
-    controls.autoRotate = true;
+    // controls.autoRotate = true;
     controls.autoRotateSpeed = 1;
     // controls.enableRotate = false;
     // controls.enableZoom = false;
@@ -193,6 +216,10 @@ export default function Hero() {
 
     // Animate
     function animate() {
+      // calculate state for next epoch
+
+      // regenerate grid if state is the same as 2 epochs ago
+
       requestAnimationFrame(animate);
       controls.update();
 
