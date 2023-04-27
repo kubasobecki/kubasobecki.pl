@@ -16,7 +16,7 @@ function createScene() {
 }
 
 const initial = {
-  rows: 10,
+  rows: 5,
   columns: 10,
   density: 0.33,
 };
@@ -63,55 +63,110 @@ function createRenderer(heroContainer: HTMLElement, dpr: number) {
   return renderer;
 }
 
-function generateInitialEpoch() {
+function generateInitialEpoch(): [number, number][] {
   const targetNum = initial.rows * initial.columns * initial.density;
 
   // Use set of strings to produce unique co-ordinates
   const set = new Set<string>();
 
   while (set.size < targetNum) {
-    const newCoords = `${Math.round(
-      Math.random() * (initial.rows - 1)
-    )},${Math.round(Math.random() * (initial.columns - 1))}`;
-
+    const x = Math.round(Math.random() * (initial.rows - 1));
+    const z = Math.round(Math.random() * (initial.columns - 1));
+    const newCoords = `${x},${z}`;
     if (!set.has(newCoords)) set.add(newCoords);
   }
 
-  // Convert strings to actual co-ordinates
-  const orderedList = Array.from(set)
-    .map((coords) => coords.split(",").map((v) => Number(v)))
-    .sort((a: number[], b: number[]) => {
-      if (a[0] - b[0] > 0) return 1;
-      if (a[0] - b[0] < 0) return -1;
-      if (a[0] - b[0] === 0) {
-        if (a[1] - b[1] > 0) return 1;
-        if (a[1] - b[1] < 0) return -1;
-      }
-      return 0;
-    });
+  // Convert strings to actual co-ordinates and sort them
+  const list: [string, string][] = Array.from(set).map((coords) => {
+    const [x, z] = coords.split(",", 2);
+    return [x, z];
+  });
+  const numList: [number, number][] = list.map((coords) => {
+    const [x, z] = coords;
+    return [Number(x), Number(z)];
+  });
 
-  // Helper for visualizing the grid
-  for (let y = 0; y < initial.columns; y++) {
-    const row = orderedList.filter((cell) => cell[1] === y);
-    // console.log(row);
-    const rowText = Array(initial.rows).fill("-");
-    // console.log(rowText);
-    row.forEach((cell) => {
-      rowText[cell[0]] = "o";
-    });
-    console.log(rowText.join(""));
-  }
+  const orderedList = numList.sort((a, b) => {
+    if (a[0] - b[0] > 0) return 1;
+    if (a[0] - b[0] < 0) return -1;
+    if (a[0] - b[0] === 0) {
+      if (a[1] - b[1] > 0) return 1;
+      if (a[1] - b[1] < 0) return -1;
+    }
+    return 0;
+  });
 
   return orderedList;
 }
 
 function generateNextEpoch(currentEpoch: [number, number][]) {
   //
-  const newArray: [number, number][] = [];
+  const currMap: number[][] = [];
+
+  // Create bitmap from current epoch
+  for (let r = 0; r < initial.rows; r++) {
+    const cellsRow = currentEpoch.filter((cell) => cell[0] === r);
+
+    const filledRow = Array(initial.columns).fill(0);
+
+    for (const cell of cellsRow) filledRow[cell[1]] = 1;
+
+    currMap.push(filledRow);
+  }
+
+  // Extend borders of bitmap with dead cells
+  const currMapCopy = currMap.map((row) => [...row]);
+
+  const currMapExt = currMapCopy.map((row) => {
+    const rowExt = [...row];
+    rowExt[-1] = 0;
+    rowExt[rowExt.length] = 0;
+    return rowExt;
+  });
+  currMapExt[-1] = Array(initial.columns + 2).fill(0);
+  currMapExt[initial.rows] = Array(initial.columns + 2).fill(0);
+
+  // Just to see the original bitmap 👀
+  for (let i = 0; i < currMap.length; i++) console.log(currMap[i].join(" "));
+
+  // Just to see the extended bitmap 👀
+  // for (let i = -1; i < currMapExt.length; i++) {
+  //   const row = [];
+  //   for (let j = -1; j < currMapExt[i].length; j++) {
+  //     row.push(currMapExt[i][j]);
+  //   }
+  //   console.log(row.join(" ").trim());
+  // }
+
+  const newMap: number[][] = [];
+
+  // Count neighbours
+  for (let row = 0; row < initial.rows; row++) {
+    const newRow = [];
+    for (let col = 0; col < initial.columns; col++) {
+      let neighbours =
+        currMapExt[row - 1][col - 1] +
+        currMapExt[row - 1][col] +
+        currMapExt[row - 1][col + 1] +
+        currMapExt[row][col - 1] +
+        currMapExt[row][col + 1] +
+        currMapExt[row + 1][col - 1] +
+        currMapExt[row + 1][col] +
+        currMapExt[row + 1][col + 1];
+
+      newRow[col] =
+        neighbours === 3 || (neighbours === 2 && currMapExt[row][col] === 1)
+          ? 1
+          : 0;
+    }
+    newMap.push(newRow);
+  }
+  console.log("-------------New Map----------------");
+  for (let i = 0; i < newMap.length; i++) console.log(newMap[i].join(" "));
 
   // scene.getObjectByName("");
 
-  return newArray;
+  return newMap;
 }
 
 function createCell(x = 0, y = 0, z = 0, depth = 1) {
@@ -184,7 +239,7 @@ export default function Hero() {
 
     const camera = createCamera(
       heroContainer.current as HTMLDivElement,
-      [5, 25, 5]
+      [-0.001, 15, 0]
     );
 
     const { pointLight, directionalLight, pivotLight } = createLights();
@@ -198,7 +253,8 @@ export default function Hero() {
       scene.add(createCell(x, 0, z));
     });
 
-    console.log(scene);
+    generateNextEpoch(firstEpoch);
+    // console.log(scene);
 
     // Helpers
     const controls = new OrbitControls(camera, renderer.domElement);
