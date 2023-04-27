@@ -16,10 +16,13 @@ function createScene() {
 }
 
 const initial = {
-  rows: 5,
-  columns: 10,
+  rows: 100,
+  columns: 100,
   density: 0.33,
+  fps: 1000 / 30,
 };
+
+let mesh, amount;
 
 function createCamera(
   heroContainer: HTMLElement,
@@ -99,7 +102,9 @@ function generateInitialEpoch(): [number, number][] {
   return orderedList;
 }
 
-function generateNextEpoch(currentEpoch: [number, number][]) {
+function generateNextEpoch(
+  currentEpoch: [number, number][]
+): [number, number][] {
   //
   const currMap: number[][] = [];
 
@@ -127,7 +132,7 @@ function generateNextEpoch(currentEpoch: [number, number][]) {
   currMapExt[initial.rows] = Array(initial.columns + 2).fill(0);
 
   // Just to see the original bitmap 👀
-  for (let i = 0; i < currMap.length; i++) console.log(currMap[i].join(" "));
+  // for (let i = 0; i < currMap.length; i++) console.log(currMap[i].join(" "));
 
   // Just to see the extended bitmap 👀
   // for (let i = -1; i < currMapExt.length; i++) {
@@ -161,34 +166,43 @@ function generateNextEpoch(currentEpoch: [number, number][]) {
     }
     newMap.push(newRow);
   }
-  console.log("-------------New Map----------------");
-  for (let i = 0; i < newMap.length; i++) console.log(newMap[i].join(" "));
+  // console.log("-------------New Map----------------");
+  // for (let i = 0; i < newMap.length; i++) console.log(newMap[i].join(" "));
 
-  // scene.getObjectByName("");
+  // Convert to cells array
+  const nextEpoch = [];
+  for (let row = 0; row < newMap.length; row++) {
+    for (let col = 0; col < newMap[row].length; col++) {
+      if (newMap[row][col] === 1) nextEpoch.push([row, col]);
+    }
+  }
 
-  return newMap;
+  return nextEpoch as [number, number][];
 }
 
 function createCell(x = 0, y = 0, z = 0, depth = 1) {
   // Geometry
-  const shape = new THREE.Shape();
-  const angleStep = Math.PI * 0.5;
-  const radius = 0.125;
+  // const shape = new THREE.Shape();
+  // const angleStep = Math.PI * 0.5;
+  // const radius = 0.125;
 
-  shape.absarc(0.25, 0.25, radius, angleStep * 0, angleStep * 1, false);
-  shape.absarc(-0.25, 0.25, radius, angleStep * 1, angleStep * 2, false);
-  shape.absarc(-0.25, -0.25, radius, angleStep * 2, angleStep * 3, false);
-  shape.absarc(0.25, -0.25, radius, angleStep * 3, angleStep * 4, false);
+  // shape.absarc(0.25, 0.25, radius, angleStep * 0, angleStep * 1, false);
+  // shape.absarc(-0.25, 0.25, radius, angleStep * 1, angleStep * 2, false);
+  // shape.absarc(-0.25, -0.25, radius, angleStep * 2, angleStep * 3, false);
+  // shape.absarc(0.25, -0.25, radius, angleStep * 3, angleStep * 4, false);
 
-  const geo = new THREE.ExtrudeGeometry(shape, {
-    depth: depth,
-    bevelEnabled: false,
-    bevelThickness: 0.025,
-    bevelSize: 0.025,
-    bevelOffset: -0.025,
-    bevelSegments: 10,
-    curveSegments: 10,
-  });
+  // const geo = new THREE.ExtrudeGeometry(shape, {
+  //   depth: depth,
+  //   bevelEnabled: false,
+  //   bevelThickness: 0.025,
+  //   bevelSize: 0.025,
+  //   bevelOffset: -0.025,
+  //   bevelSegments: 10,
+  //   curveSegments: 10,
+  // });
+  const geo = new THREE.BoxGeometry(0.8, 0.8, 0.2);
+  // console.log(geo);
+  // const instancedGeo = new THREE.InstancedBufferGeometry(). .fromGeometry(geo);
   geo.center();
   geo.rotateX(Math.PI * -0.5);
 
@@ -210,22 +224,13 @@ function createCell(x = 0, y = 0, z = 0, depth = 1) {
     // envMap: textureCube,
   });
 
-  const cell = new THREE.Mesh(geo, mat);
+  const cell = new THREE.InstancedMesh(geo, mat, 1);
 
   cell.name = `cell[${x},${y},${z}]`;
 
-  cell.position.set(x, y, z);
+  cell.position.set(x - initial.rows / 2, y, z - initial.columns / 2);
 
   return cell;
-}
-
-function killCell(
-  scene: THREE.Scene,
-  cell: THREE.Mesh<THREE.ExtrudeGeometry, THREE.MeshPhongMaterial>
-) {
-  setTimeout(() => {
-    scene.remove(cell);
-  }, 300);
 }
 
 export default function Hero() {
@@ -243,17 +248,23 @@ export default function Hero() {
     );
 
     const { pointLight, directionalLight, pivotLight } = createLights();
-    scene.add(pointLight, directionalLight, pivotLight);
+    scene.add(pointLight, pivotLight);
 
     const renderer = createRenderer(heroContainer.current!, dpr);
 
+    // Generate initial epoch
+    let currentEpoch = generateInitialEpoch();
+
     // populate grid with initial array
-    const firstEpoch = generateInitialEpoch();
-    firstEpoch.forEach(([x, z]) => {
-      scene.add(createCell(x, 0, z));
+    const allCells = new THREE.Object3D();
+    allCells.name = "allCells";
+    scene.add(allCells);
+
+    currentEpoch.forEach(([x, z]) => {
+      allCells.add(createCell(x, 0, z));
     });
 
-    generateNextEpoch(firstEpoch);
+    generateNextEpoch(currentEpoch);
     // console.log(scene);
 
     // Helpers
@@ -264,30 +275,44 @@ export default function Hero() {
     // controls.enableZoom = false;
     const gridHelper = new THREE.GridHelper(100, 100);
     const axesHelper = new THREE.AxesHelper(5);
-    // const pointLightHelper = new THREE.PointLightHelper(pointLight);
-    // const directionalLightHelper = new THREE.DirectionalLightHelper(
-    //   directionalLight
-    // );
-    scene.add(gridHelper, axesHelper);
+    const pointLightHelper = new THREE.PointLightHelper(pointLight);
+    const directionalLightHelper = new THREE.DirectionalLightHelper(
+      directionalLight
+    );
+    scene.add(gridHelper, axesHelper, directionalLightHelper, pointLightHelper);
+
+    // Evolve world
+    const evolveWorld = setInterval(() => {
+      // Prepare new epoch
+      const nextEpoch: [number, number][] = generateNextEpoch(currentEpoch);
+      // Store new epoch as current
+      currentEpoch = nextEpoch;
+      console.count();
+      // Clear current epoch
+      scene.getObjectByName("allCells")?.clear();
+      // Create new epoch
+      currentEpoch.forEach(([x, z]) => {
+        allCells.add(createCell(x, 0, z));
+      });
+    }, initial.fps);
 
     // Animate
     function animate() {
       // calculate state for next epoch
-
       // regenerate grid if state is the same as 2 epochs ago
-
-      requestAnimationFrame(animate);
-      controls.update();
-
       pivotLight.rotation.y += 0.0025;
-
+      controls.update();
       renderer.render(scene, camera);
+      requestAnimationFrame(animate);
     }
 
     animate();
 
+    // Clear
+    const heroContainerRef = heroContainer.current;
     return () => {
-      heroContainer.current!.innerHTML = "";
+      if (heroContainerRef) heroContainerRef.innerHTML = "";
+      clearInterval(evolveWorld);
     };
   }, [heroContainer, dpr]);
 
