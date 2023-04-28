@@ -4,6 +4,7 @@ import {
   useLayoutEffect,
   useCallback,
   useMemo,
+  useState,
 } from "react";
 import * as THREE from "three";
 import {
@@ -13,7 +14,12 @@ import {
   Group,
 } from "three";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { OrbitControls, RoundedBox, useHelper } from "@react-three/drei";
+import {
+  OrbitControls,
+  RoundedBox,
+  useHelper,
+  Instances,
+} from "@react-three/drei";
 import { useDevicePixelRatio } from "use-device-pixel-ratio";
 
 THREE.ColorManagement.enabled = true;
@@ -41,10 +47,10 @@ function Scene() {
   // Game of Life logic
   //
   const initial = {
-    rows: 10,
-    columns: 10,
+    rows: 50,
+    columns: 50,
     density: 0.5,
-    fps: 1000 / 2,
+    fps: 1000 / 33,
     cubeSize: 0.8,
   };
 
@@ -163,7 +169,26 @@ function Scene() {
     [initial.rows, initial.columns]
   );
 
-  let currentEpoch = generateInitialEpoch();
+  // Generate initial epoch
+  const [population, setPopulation] = useState(generateInitialEpoch());
+
+  useEffect(() => {
+    const evolveWorld = setInterval(() => {
+      // Prepare new epoch
+      const nextPopulation = generateNextEpoch(population);
+      setPopulation(nextPopulation);
+    }, initial.fps);
+
+    // Clear
+    return () => {
+      clearInterval(evolveWorld);
+    };
+  }, [population, generateNextEpoch, initial.fps]);
+
+  // useEffect(() => {
+  //   console.count("evolved!");
+  // }, [population]);
+
   // Update epochs
   // useEffect(() => {
   //   // Generate initial epoch
@@ -182,11 +207,11 @@ function Scene() {
   //   };
   // }, []);
 
-  useFrame(() => {
-    const nextEpoch = generateNextEpoch(currentEpoch);
-    currentEpoch = nextEpoch;
-    // console.log(...currentEpoch);
-  });
+  // useFrame(() => {
+  //   const nextEpoch = generateNextEpoch(currentEpoch);
+  //   currentEpoch = nextEpoch;
+  // console.log(...currentEpoch);
+  // });
 
   return (
     <>
@@ -202,7 +227,6 @@ function Scene() {
           position={[5, 5, 5]}
         />
       </group>
-
       <group ref={cellsGroup} position={[0.5, 0, 0.5]}>
         {Array.from({ length: initial.rows * initial.columns }, (_, i) => {
           const currentRow =
@@ -210,8 +234,8 @@ function Scene() {
           const currentColumn = i % initial.columns;
           const posX = currentRow - initial.columns / 2;
           const posZ = currentColumn - initial.rows / 2;
-          const isVisible = currentEpoch[currentRow][currentColumn] > 0;
-
+          const isVisible = population[currentRow][currentColumn] > 0;
+          // console.count("!");
           return (
             <RoundedBox
               key={i}
