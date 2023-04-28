@@ -19,8 +19,11 @@ import {
   RoundedBox,
   useHelper,
   Instances,
+  Instance,
+  Stats,
 } from "@react-three/drei";
 import { useDevicePixelRatio } from "use-device-pixel-ratio";
+import { useControls } from "leva";
 
 THREE.ColorManagement.enabled = true;
 const lime = new THREE.MeshPhongMaterial({ color: "#adff16", shininess: 100 });
@@ -47,8 +50,8 @@ function Scene() {
   // Game of Life logic
   //
   const initial = {
-    rows: 50,
-    columns: 50,
+    rows: 100,
+    columns: 100,
     density: 0.5,
     fps: 1000 / 33,
     cubeSize: 0.8,
@@ -228,29 +231,35 @@ function Scene() {
         />
       </group>
       <group ref={cellsGroup} position={[0.5, 0, 0.5]}>
-        {Array.from({ length: initial.rows * initial.columns }, (_, i) => {
-          const currentRow =
-            Math.floor((initial.columns + i) / initial.columns) - 1;
-          const currentColumn = i % initial.columns;
-          const posX = currentRow - initial.columns / 2;
-          const posZ = currentColumn - initial.rows / 2;
-          const isVisible = population[currentRow][currentColumn] > 0;
-          // console.count("!");
-          return (
-            <RoundedBox
-              key={i}
-              args={[initial.cubeSize, initial.cubeSize, initial.cubeSize]}
-              radius={0.1}
-              smoothness={4}
-              creaseAngle={0.4}
-              visible={isVisible}
-              position={[posX, 0, posZ]}
-              onUpdate={(self) => console.log("props have been updated")}
-            >
-              <meshPhongMaterial color="#adff16" shininess={100} />
-            </RoundedBox>
-          );
-        })}
+        <Instances
+          limit={initial.rows * initial.columns} // Optional: max amount of items (for calculating buffer size)
+          range={initial.rows * initial.columns} // Optional: draw-range
+        >
+          <boxGeometry
+            args={[initial.cubeSize, initial.cubeSize, initial.cubeSize]}
+            // radius={0.1}
+            // smoothness={4}
+            // creaseAngle={0.4}
+          ></boxGeometry>
+          <meshPhongMaterial color="#adff16" shininess={100} />
+          {Array.from({ length: initial.rows * initial.columns }, (_, i) => {
+            const currentRow =
+              Math.floor((initial.columns + i) / initial.columns) - 1;
+            const currentColumn = i % initial.columns;
+            const posX = currentRow - initial.columns / 2;
+            const posZ = currentColumn - initial.rows / 2;
+            const isVisible = population[currentRow][currentColumn] > 0;
+            // console.count("!");
+            return population[currentRow][currentColumn] > 0 ? (
+              <Instance
+                key={i}
+                visible={isVisible}
+                position={[posX, 0, posZ]}
+                // onUpdate={(self) => console.log("props have been updated")}
+              />
+            ) : null;
+          })}
+        </Instances>
       </group>
     </>
   );
@@ -270,6 +279,7 @@ export default function Hero() {
   return (
     <div id="heroContainer" className="absolute inset-0 bottom-0 h-full w-full">
       <Canvas
+        frameloop="demand"
         linear
         gl={{ alpha: false, antialias: true, pixelRatio: dpr }}
         camera={{ position: [-0.001, 15, 0], fov: 70 }}
@@ -279,6 +289,7 @@ export default function Hero() {
         <Controls />
         <axesHelper />
         <gridHelper args={[100, 100, 0xdddddd]} />
+        <Stats />
       </Canvas>
     </div>
   );
