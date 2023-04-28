@@ -21,9 +21,9 @@ import {
   Instances,
   Instance,
   Stats,
+  Environment,
 } from "@react-three/drei";
 import { useDevicePixelRatio } from "use-device-pixel-ratio";
-import { useControls } from "leva";
 
 THREE.ColorManagement.enabled = true;
 const lime = new THREE.MeshPhongMaterial({ color: "#adff16", shininess: 100 });
@@ -290,6 +290,7 @@ export default function Hero() {
         <axesHelper />
         <gridHelper args={[100, 100, 0xdddddd]} />
         <Stats />
+        <Environment preset="city" />
       </Canvas>
     </div>
   );
