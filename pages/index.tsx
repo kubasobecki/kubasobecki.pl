@@ -30,10 +30,10 @@ oIG1lISBrdWJhc29iZWNraUBnbWFpbC5jb20=
         <title>kubasobecki.pl | home</title>
       </Head>
       <Layout>
-        <section className="relative flex min-h-[50dvh] max-w-full flex-col justify-center bg-myLime py-24 text-myDark">
+        <section className="relative flex h-[50dvh] min-h-[500px] max-w-full flex-col justify-center bg-myLime py-24 text-myDark">
           <Hero />
-          <h3 className="font-mono text-2xl uppercase">Hi, my name is Kuba</h3>
-          <h1 className="font-sans text-6xl">I make websites</h1>
+          {/* <h3 className="font-mono text-2xl uppercase">Hi, my name is Kuba</h3>
+          <h1 className="font-sans text-6xl">I make websites</h1> */}
           {/* <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 384 512"

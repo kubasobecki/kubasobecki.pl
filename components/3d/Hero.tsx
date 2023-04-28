@@ -1,325 +1,261 @@
-import { useRef, useEffect } from "react";
+import {
+  useRef,
+  useEffect,
+  useLayoutEffect,
+  useCallback,
+  useMemo,
+} from "react";
 import * as THREE from "three";
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+import {
+  CameraHelper,
+  PointLightHelper,
+  DirectionalLightHelper,
+  Group,
+} from "three";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { OrbitControls, RoundedBox, useHelper } from "@react-three/drei";
 import { useDevicePixelRatio } from "use-device-pixel-ratio";
 
-interface Window {
-  devicePixelRatio: number;
-}
+THREE.ColorManagement.enabled = true;
+const lime = new THREE.MeshPhongMaterial({ color: "#adff16", shininess: 100 });
+// const box = new THREE.RoundedBox(1, 28, 28);
 
-function createScene() {
-  const scene = new THREE.Scene();
-  // const sceneTexture = new THREE.TextureLoader().load("");
-  // scene.background = sceneTexture;
+function Scene() {
+  const camera = useRef(null!);
+  const pointLight = useRef(null!);
+  const directionalLight = useRef(null!);
+  const directionalLightGroup = useRef<Group>(null!);
+  const cellsGroup = useRef<Group>(null!);
 
-  return scene;
-}
+  useHelper(camera, CameraHelper);
+  useHelper(pointLight, PointLightHelper, 1, "red");
+  useHelper(directionalLight, DirectionalLightHelper, 1, "red");
 
-const initial = {
-  rows: 100,
-  columns: 100,
-  density: 0.33,
-  fps: 1000 / 30,
-};
-
-let mesh, amount;
-
-function createCamera(
-  heroContainer: HTMLElement,
-  position: [number, number, number]
-) {
-  const camera = new THREE.PerspectiveCamera(
-    75,
-    heroContainer.clientWidth / heroContainer.clientHeight,
-    0.1,
-    1000
-  );
-  camera.position.set(...position);
-  // camera.position.set(0, 25, 0);
-  // camera.rotation.set(-Math.PI * 0.5, 0, 0);
-  return camera;
-}
-
-function createLights() {
-  const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-
-  const pointLight = new THREE.PointLight(0xffffff);
-  pointLight.position.set(-5, 5, 5);
-
-  const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-  directionalLight.position.setScalar(5);
-
-  const pivotLight = new THREE.Object3D();
-  pivotLight.add(directionalLight);
-
-  return { ambientLight, pointLight, directionalLight, pivotLight };
-}
-
-function createRenderer(heroContainer: HTMLElement, dpr: number) {
-  const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-  renderer.setPixelRatio(dpr);
-
-  renderer.setSize(heroContainer.clientWidth, heroContainer.clientHeight);
-  heroContainer.append(renderer.domElement);
-  renderer.setClearColor(0x181818, 1);
-
-  return renderer;
-}
-
-function generateInitialEpoch(): [number, number][] {
-  const targetNum = initial.rows * initial.columns * initial.density;
-
-  // Use set of strings to produce unique co-ordinates
-  const set = new Set<string>();
-
-  while (set.size < targetNum) {
-    const x = Math.round(Math.random() * (initial.rows - 1));
-    const z = Math.round(Math.random() * (initial.columns - 1));
-    const newCoords = `${x},${z}`;
-    if (!set.has(newCoords)) set.add(newCoords);
-  }
-
-  // Convert strings to actual co-ordinates and sort them
-  const list: [string, string][] = Array.from(set).map((coords) => {
-    const [x, z] = coords.split(",", 2);
-    return [x, z];
-  });
-  const numList: [number, number][] = list.map((coords) => {
-    const [x, z] = coords;
-    return [Number(x), Number(z)];
+  useFrame(({ clock }) => {
+    // directionalLightGroup.current.rotation.y =
+    //   (Math.sin(clock.elapsedTime) * Math.PI) / 4;
+    directionalLightGroup.current.rotation.y += 0.005;
   });
 
-  const orderedList = numList.sort((a, b) => {
-    if (a[0] - b[0] > 0) return 1;
-    if (a[0] - b[0] < 0) return -1;
-    if (a[0] - b[0] === 0) {
-      if (a[1] - b[1] > 0) return 1;
-      if (a[1] - b[1] < 0) return -1;
-    }
-    return 0;
-  });
-
-  return orderedList;
-}
-
-function generateNextEpoch(
-  currentEpoch: [number, number][]
-): [number, number][] {
   //
-  const currMap: number[][] = [];
+  // Game of Life logic
+  //
+  const initial = {
+    rows: 10,
+    columns: 10,
+    density: 0.5,
+    fps: 1000 / 2,
+    cubeSize: 0.8,
+  };
 
-  // Create bitmap from current epoch
-  for (let r = 0; r < initial.rows; r++) {
-    const cellsRow = currentEpoch.filter((cell) => cell[0] === r);
+  // Generate initial epoch
+  const generateInitialEpoch = useCallback((): number[][] => {
+    const targetNum = initial.rows * initial.columns * initial.density;
 
-    const filledRow = Array(initial.columns).fill(0);
+    // Use set of strings to produce unique co-ordinates
+    const set = new Set<string>();
 
-    for (const cell of cellsRow) filledRow[cell[1]] = 1;
+    while (set.size < targetNum) {
+      const x = Math.round(Math.random() * (initial.rows - 1));
+      const z = Math.round(Math.random() * (initial.columns - 1));
+      const newCoords = `${x},${z}`;
+      if (!set.has(newCoords)) set.add(newCoords);
+    }
 
-    currMap.push(filledRow);
-  }
+    // Convert strings to actual co-ordinates and sort them
+    const list: [string, string][] = Array.from(set).map((coords) => {
+      const [x, z] = coords.split(",", 2);
+      return [x, z];
+    });
+    const numList: [number, number][] = list.map((coords) => {
+      const [x, z] = coords;
+      return [Number(x), Number(z)];
+    });
 
-  // Extend borders of bitmap with dead cells
-  const currMapCopy = currMap.map((row) => [...row]);
+    // const orderedList = numList.sort((a, b) => {
+    //   if (a[0] - b[0] > 0) return 1;
+    //   if (a[0] - b[0] < 0) return -1;
+    //   if (a[0] - b[0] === 0) {
+    //     if (a[1] - b[1] > 0) return 1;
+    //     if (a[1] - b[1] < 0) return -1;
+    //   }
+    //   return 0;
+    // });
 
-  const currMapExt = currMapCopy.map((row) => {
-    const rowExt = [...row];
-    rowExt[-1] = 0;
-    rowExt[rowExt.length] = 0;
-    return rowExt;
+    const initMap: number[][] = [];
+
+    // Create bitmap from current epoch
+    for (let r = 0; r < initial.rows; r++) {
+      const cellsRow = numList.filter((cell) => cell[0] === r);
+      const filledRow = Array(initial.columns).fill(0);
+      for (const cell of cellsRow) filledRow[cell[1]] = 1;
+      initMap.push(filledRow);
+    }
+
+    // console.log("---Initial Map-------------");
+    // for (let i = 0; i < initMap.length; i++) console.log(initMap[i].join(" "));
+
+    return initMap;
+  }, [initial.rows, initial.columns, initial.density]);
+
+  const generateNextEpoch = useCallback(
+    (currentEpoch: number[][]): number[][] => {
+      // Extend borders of bitmap with dead cells
+      const currMapExt = currentEpoch.map((row) => {
+        const rowExt = [...row];
+        rowExt[-1] = 0;
+        rowExt[rowExt.length] = 0;
+        return rowExt;
+      });
+      currMapExt[-1] = Array(initial.columns + 2).fill(0);
+      currMapExt[initial.rows] = Array(initial.columns + 2).fill(0);
+
+      // Just to see the original bitmap 👀
+      // for (let i = 0; i < currentEpoch.length; i++)
+      //   console.log(currentEpoch[i].join(" "));
+
+      // Just to see the extended bitmap 👀
+      // for (let i = -1; i < currMapExt.length; i++) {
+      //   const row = [];
+      //   for (let j = -1; j < currMapExt[i].length; j++) {
+      //     row.push(currMapExt[i][j]);
+      //   }
+      //   console.log(row.join(" ").trim());
+      // }
+
+      const newMap: number[][] = [];
+
+      // Count neighbours
+      for (let row = 0; row < initial.rows; row++) {
+        const newRow = [];
+        for (let col = 0; col < initial.columns; col++) {
+          let neighbours =
+            currMapExt[row - 1][col - 1] +
+            currMapExt[row - 1][col] +
+            currMapExt[row - 1][col + 1] +
+            currMapExt[row][col - 1] +
+            currMapExt[row][col + 1] +
+            currMapExt[row + 1][col - 1] +
+            currMapExt[row + 1][col] +
+            currMapExt[row + 1][col + 1];
+
+          newRow[col] =
+            neighbours === 3 || (neighbours === 2 && currMapExt[row][col] === 1)
+              ? 1
+              : 0;
+        }
+        newMap.push(newRow);
+      }
+      // console.log("---New Map----------------");
+      // for (let i = 0; i < newMap.length; i++) console.log(newMap[i].join(" "));
+
+      // Convert to cells array
+      // const nextEpoch = [];
+      // for (let row = 0; row < newMap.length; row++) {
+      //   for (let col = 0; col < newMap[row].length; col++) {
+      //     if (newMap[row][col] === 1) nextEpoch.push([row, col]);
+      //   }
+      // }
+
+      // return nextEpoch as [number, number][];
+      return newMap as [number][];
+    },
+    [initial.rows, initial.columns]
+  );
+
+  let currentEpoch = generateInitialEpoch();
+  // Update epochs
+  // useEffect(() => {
+  //   // Generate initial epoch
+  //   setInterval(() => {
+  //     // console.count(currentEpoch);
+  //   }, initial.fps);
+
+  //   // Evolve world
+  //   const evolveWorld = setInterval(() => {
+  //     const nextEpoch = generateNextEpoch(currentEpoch);
+  //     currentEpoch = nextEpoch;
+  //   }, initial.fps);
+
+  //   return () => {
+  //     clearInterval(evolveWorld);
+  //   };
+  // }, []);
+
+  useFrame(() => {
+    const nextEpoch = generateNextEpoch(currentEpoch);
+    currentEpoch = nextEpoch;
+    // console.log(...currentEpoch);
   });
-  currMapExt[-1] = Array(initial.columns + 2).fill(0);
-  currMapExt[initial.rows] = Array(initial.columns + 2).fill(0);
 
-  // Just to see the original bitmap 👀
-  // for (let i = 0; i < currMap.length; i++) console.log(currMap[i].join(" "));
+  return (
+    <>
+      {/* <perspectiveCamera ref={camera} position={[-0.001, 5, 0]} fov={70} /> */}
+      <ambientLight color="white" intensity={0.5} />
+      <pointLight ref={pointLight} color="white" position={[5, 5, 5]} />
 
-  // Just to see the extended bitmap 👀
-  // for (let i = -1; i < currMapExt.length; i++) {
-  //   const row = [];
-  //   for (let j = -1; j < currMapExt[i].length; j++) {
-  //     row.push(currMapExt[i][j]);
-  //   }
-  //   console.log(row.join(" ").trim());
-  // }
+      <group ref={directionalLightGroup}>
+        <directionalLight
+          ref={directionalLight}
+          color="white"
+          intensity={1}
+          position={[5, 5, 5]}
+        />
+      </group>
 
-  const newMap: number[][] = [];
+      <group ref={cellsGroup} position={[0.5, 0, 0.5]}>
+        {Array.from({ length: initial.rows * initial.columns }, (_, i) => {
+          const currentRow =
+            Math.floor((initial.columns + i) / initial.columns) - 1;
+          const currentColumn = i % initial.columns;
+          const posX = currentRow - initial.columns / 2;
+          const posZ = currentColumn - initial.rows / 2;
+          const isVisible = currentEpoch[currentRow][currentColumn] > 0;
 
-  // Count neighbours
-  for (let row = 0; row < initial.rows; row++) {
-    const newRow = [];
-    for (let col = 0; col < initial.columns; col++) {
-      let neighbours =
-        currMapExt[row - 1][col - 1] +
-        currMapExt[row - 1][col] +
-        currMapExt[row - 1][col + 1] +
-        currMapExt[row][col - 1] +
-        currMapExt[row][col + 1] +
-        currMapExt[row + 1][col - 1] +
-        currMapExt[row + 1][col] +
-        currMapExt[row + 1][col + 1];
-
-      newRow[col] =
-        neighbours === 3 || (neighbours === 2 && currMapExt[row][col] === 1)
-          ? 1
-          : 0;
-    }
-    newMap.push(newRow);
-  }
-  // console.log("-------------New Map----------------");
-  // for (let i = 0; i < newMap.length; i++) console.log(newMap[i].join(" "));
-
-  // Convert to cells array
-  const nextEpoch = [];
-  for (let row = 0; row < newMap.length; row++) {
-    for (let col = 0; col < newMap[row].length; col++) {
-      if (newMap[row][col] === 1) nextEpoch.push([row, col]);
-    }
-  }
-
-  return nextEpoch as [number, number][];
+          return (
+            <RoundedBox
+              key={i}
+              args={[initial.cubeSize, initial.cubeSize, initial.cubeSize]}
+              radius={0.1}
+              smoothness={4}
+              creaseAngle={0.4}
+              visible={isVisible}
+              position={[posX, 0, posZ]}
+              onUpdate={(self) => console.log("props have been updated")}
+            >
+              <meshPhongMaterial color="#adff16" shininess={100} />
+            </RoundedBox>
+          );
+        })}
+      </group>
+    </>
+  );
 }
 
-function createCell(x = 0, y = 0, z = 0, depth = 1) {
-  // Geometry
-  // const shape = new THREE.Shape();
-  // const angleStep = Math.PI * 0.5;
-  // const radius = 0.125;
-
-  // shape.absarc(0.25, 0.25, radius, angleStep * 0, angleStep * 1, false);
-  // shape.absarc(-0.25, 0.25, radius, angleStep * 1, angleStep * 2, false);
-  // shape.absarc(-0.25, -0.25, radius, angleStep * 2, angleStep * 3, false);
-  // shape.absarc(0.25, -0.25, radius, angleStep * 3, angleStep * 4, false);
-
-  // const geo = new THREE.ExtrudeGeometry(shape, {
-  //   depth: depth,
-  //   bevelEnabled: false,
-  //   bevelThickness: 0.025,
-  //   bevelSize: 0.025,
-  //   bevelOffset: -0.025,
-  //   bevelSegments: 10,
-  //   curveSegments: 10,
-  // });
-  const geo = new THREE.BoxGeometry(0.8, 0.8, 0.2);
-  // console.log(geo);
-  // const instancedGeo = new THREE.InstancedBufferGeometry(). .fromGeometry(geo);
-  geo.center();
-  geo.rotateX(Math.PI * -0.5);
-
-  // Material
-  // const loader = new THREE.CubeTextureLoader();
-  // loader.setPath("https://threejs.org/examples/textures/cube/pisa/");
-  // const textureCube = loader.load([
-  //   "px.png",
-  //   "nx.png",
-  //   "py.png",
-  //   "ny.png",
-  //   "pz.png",
-  //   "nz.png",
-  // ]);
-
-  const mat = new THREE.MeshPhongMaterial({
-    color: 0xadff16,
-    shininess: 100,
-    // envMap: textureCube,
-  });
-
-  const cell = new THREE.InstancedMesh(geo, mat, 1);
-
-  cell.name = `cell[${x},${y},${z}]`;
-
-  cell.position.set(x - initial.rows / 2, y, z - initial.columns / 2);
-
-  return cell;
+function Controls() {
+  const {
+    camera,
+    gl: { domElement },
+  } = useThree();
+  return <OrbitControls args={[camera, domElement]} />;
 }
 
 export default function Hero() {
-  const heroContainer = useRef<HTMLDivElement>(null);
   const dpr = useDevicePixelRatio();
 
-  useEffect(() => {
-    if (!heroContainer) return;
-
-    const scene = createScene();
-
-    const camera = createCamera(
-      heroContainer.current as HTMLDivElement,
-      [-0.001, 15, 0]
-    );
-
-    const { pointLight, directionalLight, pivotLight } = createLights();
-    scene.add(pointLight, pivotLight);
-
-    const renderer = createRenderer(heroContainer.current!, dpr);
-
-    // Generate initial epoch
-    let currentEpoch = generateInitialEpoch();
-
-    // populate grid with initial array
-    const allCells = new THREE.Object3D();
-    allCells.name = "allCells";
-    scene.add(allCells);
-
-    currentEpoch.forEach(([x, z]) => {
-      allCells.add(createCell(x, 0, z));
-    });
-
-    generateNextEpoch(currentEpoch);
-    // console.log(scene);
-
-    // Helpers
-    const controls = new OrbitControls(camera, renderer.domElement);
-    // controls.autoRotate = true;
-    controls.autoRotateSpeed = 1;
-    // controls.enableRotate = false;
-    // controls.enableZoom = false;
-    const gridHelper = new THREE.GridHelper(100, 100);
-    const axesHelper = new THREE.AxesHelper(5);
-    const pointLightHelper = new THREE.PointLightHelper(pointLight);
-    const directionalLightHelper = new THREE.DirectionalLightHelper(
-      directionalLight
-    );
-    scene.add(gridHelper, axesHelper, directionalLightHelper, pointLightHelper);
-
-    // Evolve world
-    const evolveWorld = setInterval(() => {
-      // Prepare new epoch
-      const nextEpoch: [number, number][] = generateNextEpoch(currentEpoch);
-      // Store new epoch as current
-      currentEpoch = nextEpoch;
-      console.count();
-      // Clear current epoch
-      scene.getObjectByName("allCells")?.clear();
-      // Create new epoch
-      currentEpoch.forEach(([x, z]) => {
-        allCells.add(createCell(x, 0, z));
-      });
-    }, initial.fps);
-
-    // Animate
-    function animate() {
-      // calculate state for next epoch
-      // regenerate grid if state is the same as 2 epochs ago
-      pivotLight.rotation.y += 0.0025;
-      controls.update();
-      renderer.render(scene, camera);
-      requestAnimationFrame(animate);
-    }
-
-    animate();
-
-    // Clear
-    const heroContainerRef = heroContainer.current;
-    return () => {
-      if (heroContainerRef) heroContainerRef.innerHTML = "";
-      clearInterval(evolveWorld);
-    };
-  }, [heroContainer, dpr]);
-
   return (
-    <div
-      ref={heroContainer}
-      className="heroContainer absolute inset-0 bottom-0 h-full w-full"
-    ></div>
+    <div id="heroContainer" className="absolute inset-0 bottom-0 h-full w-full">
+      <Canvas
+        linear
+        gl={{ alpha: false, antialias: true, pixelRatio: dpr }}
+        camera={{ position: [-0.001, 15, 0], fov: 70 }}
+        style={{ background: "#181818" }}
+      >
+        <Scene />
+        <Controls />
+        <axesHelper />
+        <gridHelper args={[100, 100, 0xdddddd]} />
+      </Canvas>
+    </div>
   );
 }
