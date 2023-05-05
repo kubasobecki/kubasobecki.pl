@@ -18,10 +18,10 @@ import { useDevicePixelRatio } from "use-device-pixel-ratio";
 
 const GOL = {
   rows: 100,
-  columns: 100,
+  columns: 250,
   density: 0.5,
   fps: 30,
-  cubeSize: 0.75,
+  cubeSize: 0.66,
 };
 
 const tempBoxes = new THREE.Object3D();
@@ -166,8 +166,8 @@ function Scene() {
     for (let i = 0; i < GOL.rows * GOL.columns; i++) {
       const currentRow = Math.floor((GOL.columns + i) / GOL.columns) - 1;
       const currentColumn = i % GOL.columns;
-      const posX = currentRow - GOL.columns / 2 + 0.5;
-      const posZ = currentColumn - GOL.rows / 2 + 0.5;
+      const posX = currentRow - GOL.rows / 2 + 0.5;
+      const posZ = currentColumn - GOL.columns / 2 + 0.5;
       tempBoxes.position.set(posX, 0, posZ);
 
       const isVisible = population[currentRow][currentColumn] > 0;
@@ -236,14 +236,14 @@ export default function Hero() {
         frameloop="demand"
         linear
         gl={{ alpha: false, antialias: true, pixelRatio: dpr }}
-        camera={{ position: [-0.001, 35, 0], fov: 70 }}
+        camera={{ position: [-0.001, 60, 0], fov: 45 }}
         style={{ background: "#181818" }}
       >
         <Scene />
         <Controls />
         {/* <axesHelper /> */}
         {/* <gridHelper args={[100, 100, 0xdddddd]} /> */}
-        {/* <Stats /> */}
+        <Stats />
         <Environment preset="city" />
       </Canvas>
     </div>
