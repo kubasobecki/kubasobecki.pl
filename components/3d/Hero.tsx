@@ -17,10 +17,11 @@ import {
 import { useDevicePixelRatio } from "use-device-pixel-ratio";
 
 const GOL = {
-  rows: 100,
-  columns: 250,
+  rows: 120,
+  columns: 360,
   density: 0.5,
   fps: 30,
+  pps: 6,
   cubeSize: 0.66,
 };
 
@@ -144,6 +145,7 @@ function Scene() {
   const directionalLightGroup = useRef<Group>(null!);
 
   const [population, setPopulation] = useState(generateInitialEpoch());
+  const [frame, setFrame] = useState(0);
   const meshRef = useRef<THREE.InstancedMesh>(null!);
   const boxesGeometry = new THREE.BoxGeometry(
     GOL.cubeSize,
@@ -155,9 +157,9 @@ function Scene() {
     shininess: 100,
   });
 
-  // useHelper(camera, CameraHelper);
-  // useHelper(pointLight, PointLightHelper, 1, "red");
-  // useHelper(directionalLight, DirectionalLightHelper, 1, "red");
+  useHelper(camera, CameraHelper);
+  useHelper(pointLight, PointLightHelper, 1, "red");
+  useHelper(directionalLight, DirectionalLightHelper, 1, "red");
 
   useFrame(({ clock }) => {
     const t = clock.oldTime * 0.0005;
@@ -171,12 +173,8 @@ function Scene() {
       tempBoxes.position.set(posX, 0, posZ);
 
       const isVisible = population[currentRow][currentColumn] > 0;
-      if (isVisible) {
-        tempBoxes.scale.setScalar(1);
-      } else {
-        tempBoxes.scale.setScalar(0);
-      }
-      // console.log(tempBoxes);
+      tempBoxes.scale.setScalar(isVisible ? 1 : 0);
+
       tempBoxes.updateMatrix();
       meshRef.current.setMatrixAt(i, tempBoxes.matrix);
     }
@@ -185,15 +183,19 @@ function Scene() {
   });
 
   useEffect(() => {
-    const evolveWorld = setInterval(() => {
-      const nextPopulation = generateNextEpoch(population);
-      setPopulation(nextPopulation);
+    // control Frames Per Second
+    const render = setInterval(() => {
+      setFrame((frame) => (frame % GOL.fps) + 1);
+
+      // control Populations Per Second
+      if (frame % (GOL.fps / GOL.pps) < 1)
+        setPopulation(generateNextEpoch(population));
     }, 1000 / GOL.fps);
 
     return () => {
-      clearInterval(evolveWorld);
+      clearInterval(render);
     };
-  }, [population]);
+  }, [frame, population]);
 
   return (
     <>
