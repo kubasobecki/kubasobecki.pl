@@ -16,7 +16,7 @@ export default function Projects() {
   }, [dispatch]);
 
   useEffect(() => {
-    console.log(projects);
+    // console.log(projects);
   }, [projects]);
 
   return (

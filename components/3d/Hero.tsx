@@ -17,8 +17,8 @@ import {
 import { useDevicePixelRatio } from "use-device-pixel-ratio";
 
 const GOL = {
-  rows: 120,
-  columns: 360,
+  rows: 60,
+  columns: 280,
   density: 0.5,
   fps: 30,
   pps: 6,
@@ -147,13 +147,11 @@ function Scene() {
   const [population, setPopulation] = useState(generateInitialEpoch());
   const [frame, setFrame] = useState(0);
   const meshRef = useRef<THREE.InstancedMesh>(null!);
-  const boxesGeometry = new THREE.BoxGeometry(
-    GOL.cubeSize,
-    GOL.cubeSize,
-    GOL.cubeSize
-  );
+  const cellsGeometry = new THREE.PlaneGeometry(GOL.cubeSize, GOL.cubeSize);
+  cellsGeometry.rotateX(Math.PI / 2);
   const material = new THREE.MeshPhongMaterial({
     color: "#adff16",
+    side: THREE.DoubleSide,
     shininess: 100,
   });
 
@@ -164,6 +162,7 @@ function Scene() {
   useFrame(({ clock }) => {
     const t = clock.oldTime * 0.0005;
     directionalLightGroup.current.rotation.y = t;
+    // cellsGeometry.rotateX(Math.sin(t));
 
     for (let i = 0; i < GOL.rows * GOL.columns; i++) {
       const currentRow = Math.floor((GOL.columns + i) / GOL.columns) - 1;
@@ -215,7 +214,7 @@ function Scene() {
 
       <instancedMesh
         ref={meshRef}
-        args={[boxesGeometry, material, GOL.rows * GOL.columns]}
+        args={[cellsGeometry, material, GOL.rows * GOL.columns]}
       />
     </>
   );

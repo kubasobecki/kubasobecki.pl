@@ -3,8 +3,25 @@ import type { AppProps } from "next/app";
 import Head from "next/head";
 import { Provider } from "react-redux";
 import { store } from "../store/store";
+import { useEffect } from "react";
 
 export default function App({ Component, pageProps }: AppProps) {
+  // Easter egg
+  useEffect(() => {
+    console.log(
+      `%c   ,_,
+  (O,O)
+  (   )
+---"-"-------------------------------
+TG9va2luZyBhdCBzb3VyY2UgY29kZT8gTWF5Y
+mUgeW91J3JlIHRoZSBraW5kIG9mIHBlcnNvbi
+B3aG8gd291bGQgZW5qb3kgd29ya2luZyB3aXR
+oIG1lISBrdWJhc29iZWNraUBnbWFpbC5jb20=
+-------------------------------------`,
+      "\n font-family: monospace; \n color: #ADFF16"
+    );
+  }, []);
+
   return (
     <Provider store={store}>
       <Head>

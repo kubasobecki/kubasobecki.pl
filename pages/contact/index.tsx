@@ -99,7 +99,7 @@ export default function Contact() {
             <Tooltip id="tooltip-mobile" style={tooltipStyle} />
           </div>
 
-          <div className="mb-16 rounded-lg bg-slate-200 p-4 dark:bg-zinc-800">
+          <div className="mb-16 bg-slate-200 p-4 dark:bg-zinc-800">
             <ContactForm />
           </div>
         </div>
