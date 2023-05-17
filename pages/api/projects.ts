@@ -69,7 +69,7 @@ const projectsArray = [
   {
     id: 6,
     name: "Project 06",
-    tags: ["Website", "Web App", "Frontend"],
+    tags: ["Website", "Web App", "Frontend", "Wordpress"],
     stack: ["HTML", "CSS", "Wordpress"],
     date: "2023-12-17",
     images: {
@@ -95,7 +95,7 @@ const projectsArray = [
   {
     id: 8,
     name: "Project 08",
-    tags: ["Web App", "UI"],
+    tags: ["Web App", "UI", "HTML", "CSS", "Wordpress"],
     stack: ["HTML", "CSS", "Wordpress"],
     date: "2022-12-17",
     images: {

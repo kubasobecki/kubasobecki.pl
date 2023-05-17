@@ -7,7 +7,7 @@ export default function ProjectTag({ text }: { text: string }) {
 
   return (
     <button
-      className={`tag border border-myDark/10 py-1 px-2 text-myDark transition-colors hover:border-transparent hover:bg-myDark/10`}
+      className={`tag mr-1 mb-1 border border-myDark/10 py-1 px-1 text-myDark transition-colors hover:border-transparent hover:bg-myDark/10`}
       onClick={() => {
         dispatch(setFilter(text));
       }}
