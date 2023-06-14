@@ -4,6 +4,7 @@ import { fetchProjects } from "@/utilities/api";
 export interface Project {
   id: number;
   name: string;
+  slug: string;
   tags?: string[];
   stack?: string[];
   date?: string;

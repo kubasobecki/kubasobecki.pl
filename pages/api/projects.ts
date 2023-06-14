@@ -4,6 +4,7 @@ const projectsArray = [
   {
     id: 1,
     name: "Project 01",
+    slug: "project-01",
     tags: ["UI", "Frontend"],
     stack: ["HTML", "CSS", "Wordpress"],
     date: "2021-12-17",
@@ -17,6 +18,7 @@ const projectsArray = [
   {
     id: 2,
     name: "Project 02",
+    slug: "project-02",
     tags: ["Web App", "UI"],
     stack: ["HTML", "CSS", "Wordpress"],
     date: "2022-12-17",
@@ -30,6 +32,7 @@ const projectsArray = [
   {
     id: 3,
     name: "Project 03",
+    slug: "project-03",
     tags: ["Website", "Web App", "Frontend"],
     stack: ["HTML", "CSS", "Wordpress"],
     date: "2023-12-17",
@@ -43,6 +46,7 @@ const projectsArray = [
   {
     id: 4,
     name: "Project 04",
+    slug: "project-04",
     tags: ["UI", "Frontend"],
     stack: ["HTML", "CSS", "Wordpress"],
     date: "2021-12-17",
@@ -56,6 +60,7 @@ const projectsArray = [
   {
     id: 5,
     name: "Project 05",
+    slug: "project-05",
     tags: ["Web App", "UI"],
     stack: ["HTML", "CSS", "Wordpress"],
     date: "2022-12-17",
@@ -69,6 +74,7 @@ const projectsArray = [
   {
     id: 6,
     name: "Project 06",
+    slug: "project-06",
     tags: ["Website", "Web App", "Frontend", "Wordpress"],
     stack: ["HTML", "CSS", "Wordpress"],
     date: "2023-12-17",
@@ -82,6 +88,7 @@ const projectsArray = [
   {
     id: 7,
     name: "Project 07",
+    slug: "project-07",
     tags: ["UI", "Frontend"],
     stack: ["HTML", "CSS", "Wordpress"],
     date: "2021-12-17",
@@ -95,6 +102,7 @@ const projectsArray = [
   {
     id: 8,
     name: "Project 08",
+    slug: "project-08",
     tags: ["Web App", "UI", "HTML", "CSS", "Wordpress"],
     stack: ["HTML", "CSS", "Wordpress"],
     date: "2022-12-17",
@@ -108,6 +116,7 @@ const projectsArray = [
   {
     id: 9,
     name: "Project 09",
+    slug: "project-09",
     tags: ["Website", "Web App", "Frontend"],
     stack: ["HTML", "CSS", "Wordpress"],
     date: "2023-12-17",
@@ -121,6 +130,7 @@ const projectsArray = [
   {
     id: 10,
     name: "Project 10",
+    slug: "project-10",
     tags: ["UI", "Frontend"],
     stack: ["HTML", "CSS", "Wordpress"],
     date: "2021-12-17",
@@ -134,6 +144,7 @@ const projectsArray = [
   {
     id: 11,
     name: "Project 11",
+    slug: "project-11",
     tags: ["Web App", "UI"],
     stack: ["HTML", "CSS", "Wordpress"],
     date: "2022-12-17",
@@ -147,6 +158,7 @@ const projectsArray = [
   {
     id: 12,
     name: "Project 12",
+    slug: "project-12",
     tags: ["Website", "Web App", "Frontend"],
     stack: ["HTML", "CSS", "Wordpress"],
     date: "2023-12-17",

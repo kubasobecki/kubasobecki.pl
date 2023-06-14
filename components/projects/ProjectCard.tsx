@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { Project } from "@/store/projects-slice";
 import ProjectTag from "./ProjectsTag";
 
-export default function ProjectSingle({
+export default function ProjectCard({
   date,
   description,
   images,

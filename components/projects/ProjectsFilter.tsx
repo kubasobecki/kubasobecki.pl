@@ -21,11 +21,11 @@ export default function ProjectsFilter({ projects }: { projects: Project[] }) {
   );
 
   return (
-    <div className="my-8 flex justify-center space-x-2">
+    <div className="my-8">
       <button
         key="all"
         disabled={filter === ""}
-        className="bg-myDark py-2 px-4 text-sm text-white duration-200 hover:bg-myLime hover:font-bold hover:text-myDark disabled:bg-myLime disabled:font-bold disabled:text-myDark"
+        className="mb-2 mr-2 inline-block bg-myDark py-2 px-4 text-sm text-white duration-200 hover:bg-myLime hover:font-bold hover:text-myDark disabled:bg-myLime disabled:font-bold disabled:text-myDark"
         onClick={() => {
           dispatch(setFilter(""));
         }}
@@ -36,7 +36,7 @@ export default function ProjectsFilter({ projects }: { projects: Project[] }) {
         <button
           key={index}
           disabled={tag === filter}
-          className="bg-myDark py-2 px-4 text-sm text-white duration-200 hover:bg-myLime hover:font-bold hover:text-myDark disabled:bg-myLime disabled:font-bold disabled:text-myDark"
+          className="mb-2 mr-2 inline-block bg-myDark py-2 px-4 text-sm text-white duration-200 hover:bg-myLime hover:font-bold hover:text-myDark disabled:bg-myLime disabled:font-bold disabled:text-myDark"
           onClick={() => {
             dispatch(setFilter(tag));
           }}

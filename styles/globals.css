@@ -203,7 +203,7 @@
 /***** HEADINGS *****/
 
 .page-heading {
-  @apply px-8 py-16;
+  @apply py-16;
 }
 
 /***** SECTIONS *****/

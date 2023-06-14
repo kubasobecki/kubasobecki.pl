@@ -1,8 +1,7 @@
-import { useAppDispatch, useAppSelector } from "@/utilities/hooks";
+import { useAppDispatch } from "@/utilities/hooks";
 import { setFilter } from "@/store/projects-slice";
 
 export default function ProjectTag({ text }: { text: string }) {
-  const filter = useAppSelector((state) => state.projects.filter);
   const dispatch = useAppDispatch();
 
   return (
