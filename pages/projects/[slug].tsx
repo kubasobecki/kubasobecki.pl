@@ -57,12 +57,12 @@ export async function getStaticProps() {
   };
 }
 
-export async function getStaticPaths() {
-  const projects = await fetchProjects();
+// export async function getStaticPaths() {
+//   const projects = await fetchProjects();
 
-  const paths = projects.map((p: any) => ({
-    params: { id: p.slug },
-  }));
+//   const paths = projects.map((p) => ({
+//     params: { id: p.slug },
+//   }));
 
-  return { paths, fallback: false };
-}
+//   return { paths, fallback: false };
+// }
