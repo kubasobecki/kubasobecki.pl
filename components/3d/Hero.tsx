@@ -17,11 +17,11 @@ import {
 import { useDevicePixelRatio } from "use-device-pixel-ratio";
 
 const GOL = {
-  rows: 60,
-  columns: 280,
+  rows: 120,
+  columns: 360,
   density: 0.5,
   fps: 30,
-  pps: 6,
+  pps: 10,
   cubeSize: 0.66,
 };
 
@@ -152,6 +152,10 @@ function Scene({ population }: { population: number[][] }) {
     g.rotateX(Math.PI / 2);
     return g;
   }, []);
+  // const cellGeometry = useMemo(
+  //   () => new THREE.BoxGeometry(GOL.cubeSize, GOL.cubeSize, GOL.cubeSize),
+  //   []
+  // );
 
   // Shared Material
   const material = useMemo(
@@ -260,7 +264,7 @@ export default function Hero() {
         frameloop={frameloop}
         linear
         gl={{ alpha: false, antialias: true, pixelRatio: dpr }}
-        camera={{ position: [-0.001, 60, 0], fov: 45 }}
+        camera={{ position: [-0.001, 80, 0], fov: 45 }}
         style={{ background: "#181818" }}
       >
         <Scene population={population} />
