@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, useMemo } from "react";
 import * as THREE from "three";
 import {
   CameraHelper,
@@ -25,7 +25,7 @@ const GOL = {
   cubeSize: 0.66,
 };
 
-const tempBoxes = new THREE.Object3D();
+const tempBox = new THREE.Object3D();
 
 function generateInitialEpoch(): number[][] {
   const targetNum = GOL.rows * GOL.columns * GOL.density;
@@ -72,6 +72,7 @@ function generateInitialEpoch(): number[][] {
 
   // console.log("---Initial Map-------------");
   // for (let i = 0; i < initMap.length; i++) console.log(initMap[i].join(" "));
+  // console.log(initMap);
 
   return initMap;
 }
@@ -135,25 +136,33 @@ function generateNextEpoch(currentEpoch: number[][]): number[][] {
   // }
 
   // return nextEpoch as [number, number][];
-  return newMap as [number][];
+  return newMap;
 }
 
-function Scene() {
+function Scene({ population }: { population: number[][] }) {
   const camera = useRef(null!);
   const pointLight = useRef(null!);
   const directionalLight = useRef(null!);
   const directionalLightGroup = useRef<Group>(null!);
-
-  const [population, setPopulation] = useState(generateInitialEpoch());
-  const [frame, setFrame] = useState(0);
   const meshRef = useRef<THREE.InstancedMesh>(null!);
-  const cellsGeometry = new THREE.PlaneGeometry(GOL.cubeSize, GOL.cubeSize);
-  cellsGeometry.rotateX(Math.PI / 2);
-  const material = new THREE.MeshPhongMaterial({
-    color: "#adff16",
-    side: THREE.DoubleSide,
-    shininess: 100,
-  });
+
+  // Shared Geometry
+  const cellGeometry = useMemo(() => {
+    const g = new THREE.PlaneGeometry(GOL.cubeSize, GOL.cubeSize);
+    g.rotateX(Math.PI / 2);
+    return g;
+  }, []);
+
+  // Shared Material
+  const material = useMemo(
+    () =>
+      new THREE.MeshPhongMaterial({
+        color: "#adff16",
+        side: THREE.DoubleSide,
+        shininess: 100,
+      }),
+    []
+  );
 
   useHelper(camera, CameraHelper);
   useHelper(pointLight, PointLightHelper, 1, "red");
@@ -162,39 +171,22 @@ function Scene() {
   useFrame(({ clock }) => {
     const t = clock.oldTime * 0.0005;
     directionalLightGroup.current.rotation.y = t;
-    // cellsGeometry.rotateX(Math.sin(t));
 
     for (let i = 0; i < GOL.rows * GOL.columns; i++) {
       const currentRow = Math.floor((GOL.columns + i) / GOL.columns) - 1;
       const currentColumn = i % GOL.columns;
       const posX = currentRow - GOL.rows / 2 + 0.5;
       const posZ = currentColumn - GOL.columns / 2 + 0.5;
-      tempBoxes.position.set(posX, 0, posZ);
+      tempBox.position.set(posX, 0, posZ);
 
       const isVisible = population[currentRow][currentColumn] > 0;
-      tempBoxes.scale.setScalar(isVisible ? 1 : 0);
+      tempBox.scale.setScalar(isVisible ? 1 : 0);
 
-      tempBoxes.updateMatrix();
-      meshRef.current.setMatrixAt(i, tempBoxes.matrix);
+      tempBox.updateMatrix();
+      meshRef.current.setMatrixAt(i, tempBox.matrix);
     }
-
     meshRef.current.instanceMatrix.needsUpdate = true;
   });
-
-  useEffect(() => {
-    // control Frames Per Second
-    const render = setInterval(() => {
-      setFrame((frame) => (frame % GOL.fps) + 1);
-
-      // control Populations Per Second
-      if (frame % (GOL.fps / GOL.pps) < 1)
-        setPopulation(generateNextEpoch(population));
-    }, 1000 / GOL.fps);
-
-    return () => {
-      clearInterval(render);
-    };
-  }, [frame, population]);
 
   return (
     <>
@@ -214,7 +206,7 @@ function Scene() {
 
       <instancedMesh
         ref={meshRef}
-        args={[cellsGeometry, material, GOL.rows * GOL.columns]}
+        args={[cellGeometry, material, GOL.rows * GOL.columns]}
       />
     </>
   );
@@ -231,16 +223,47 @@ function Controls() {
 export default function Hero() {
   const dpr = useDevicePixelRatio();
 
+  // Stop when out of view
+  const canvasRef = useRef(null!);
+  const [frameloop, setFrameloop] = useState<"never" | "always">("never");
+  const [isHeroVisible, setIsHeroVisible] = useState(false);
+  const [population, setPopulation] = useState(generateInitialEpoch);
+
+  useEffect(() => {
+    const heroObs = new IntersectionObserver(
+      ([{ isIntersecting }]) => setIsHeroVisible(isIntersecting),
+      { threshold: 0.75 }
+    );
+
+    heroObs.observe(canvasRef.current);
+
+    setFrameloop(isHeroVisible ? "always" : "never");
+
+    // Control Populations Per Second
+    const render = setInterval(
+      () => {
+        setPopulation(generateNextEpoch(population));
+      },
+      isHeroVisible ? 1000 / GOL.pps : 86400000
+    );
+
+    return () => {
+      heroObs.disconnect();
+      clearInterval(render);
+    };
+  }, [isHeroVisible, population]);
+
   return (
     <div id="heroContainer" className="absolute inset-0 bottom-0 h-full w-full">
       <Canvas
-        frameloop="demand"
+        ref={canvasRef}
+        frameloop={frameloop}
         linear
         gl={{ alpha: false, antialias: true, pixelRatio: dpr }}
         camera={{ position: [-0.001, 60, 0], fov: 45 }}
         style={{ background: "#181818" }}
       >
-        <Scene />
+        <Scene population={population} />
         <Controls />
         {/* <axesHelper /> */}
         {/* <gridHelper args={[100, 100, 0xdddddd]} /> */}
