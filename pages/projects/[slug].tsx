@@ -43,26 +43,26 @@ export default function Project() {
   );
 }
 
-export async function getStaticProps() {
-  // Call an external API endpoint to get posts.
-  // You can use any data fetching library
-  const projects = await fetchProjects();
+// export async function getStaticProps() {
+//   // Call an external API endpoint to get posts.
+//   // You can use any data fetching library
+//   const projects = await fetchProjects();
 
-  // By returning { props: { posts } }, the Blog component
-  // will receive `posts` as a prop at build time
-  return {
-    props: {
-      projects,
-    },
-  };
-}
+//   // By returning { props: { posts } }, the Blog component
+//   // will receive `posts` as a prop at build time
+//   return {
+//     props: {
+//       projects,
+//     },
+//   };
+// }
 
-export async function getStaticPaths() {
-  const projects = await fetchProjects();
+// export async function getStaticPaths() {
+//   const projects = await fetchProjects();
 
-  const paths = projects.map((p) => ({
-    params: { id: p.slug },
-  }));
+//   const paths = projects.map((p) => ({
+//     params: { id: p.slug },
+//   }));
 
-  return { paths, fallback: false };
-}
+//   return { paths, fallback: false };
+// }
