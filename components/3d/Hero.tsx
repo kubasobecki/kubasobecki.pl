@@ -232,7 +232,7 @@ export default function Hero() {
   useEffect(() => {
     const heroObs = new IntersectionObserver(
       ([{ isIntersecting }]) => setIsHeroVisible(isIntersecting),
-      { threshold: 0.75 }
+      { threshold: 0.1 }
     );
 
     heroObs.observe(canvasRef.current);
