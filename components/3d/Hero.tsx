@@ -14,16 +14,19 @@ import {
   Stats,
   Environment,
   PerspectiveCamera,
+  Stars,
 } from "@react-three/drei";
 import { useDevicePixelRatio } from "use-device-pixel-ratio";
 
 const GOL = {
   rows: 200,
   columns: 360,
+  // rows: 200,
+  // columns: 360,
   density: 0.5,
   fps: 30,
   pps: 10,
-  cellSize: 0.66,
+  cellSize: 0.9,
 };
 
 const tempBox = new THREE.Object3D();
@@ -147,16 +150,17 @@ function Scene({ population }: { population: number[][] }) {
   const directionalLightGroup = useRef<Group>(null!);
   const meshRef = useRef<THREE.InstancedMesh>(null!);
 
+  // Helpers
+  // useHelper(camera, CameraHelper);
+  // useHelper(pointLight, PointLightHelper, 1, "red");
+  // useHelper(directionalLight, DirectionalLightHelper, 1, "red");
+
   // Shared Geometry
   const cellGeometry = useMemo(() => {
     const g = new THREE.PlaneGeometry(GOL.cellSize, GOL.cellSize);
     g.rotateX(Math.PI / 2);
     return g;
   }, []);
-  // const cellGeometry = useMemo(
-  //   () => new THREE.BoxGeometry(GOL.cellSize, GOL.cellSize, GOL.cellSize),
-  //   []
-  // );
 
   // Shared Material
   const cellMaterial = useMemo(
@@ -169,25 +173,15 @@ function Scene({ population }: { population: number[][] }) {
     []
   );
 
-  useHelper(camera, CameraHelper);
-  // useHelper(pointLight, PointLightHelper, 1, "red");
-  // useHelper(directionalLight, DirectionalLightHelper, 1, "red");
-
-  // Update cells
   useFrame(({ clock }) => {
-    // const t = clock.oldTime * 0.005;
-    // directionalLightGroup.current.rotation.y = t;
-    // camera.current.rotation.x = t;
-
     // Camera movement
     const et = clock.elapsedTime;
-    // console.log(camera.current);
     camera.current.position.z = Math.sin(et / 5) * 50;
     camera.current.position.y = 75 - Math.sin(et / 10) * 15;
-    // camera.current.rotation.x = -Math.PI / 2 - Math.sin(et / Math.PI) / 10;
     camera.current.rotation.z = -Math.PI / 2 - Math.sin(et / Math.PI) / 5;
     camera.current.rotation.y = Math.sin(et / Math.PI) / 10;
 
+    // Population update
     for (let i = 0; i < GOL.rows * GOL.columns; i++) {
       const currentRow = Math.floor((GOL.columns + i) / GOL.columns) - 1;
       const currentColumn = i % GOL.columns;
@@ -196,11 +190,13 @@ function Scene({ population }: { population: number[][] }) {
       tempBox.position.set(posX, 0, posZ);
 
       const isVisible = population[currentRow][currentColumn] > 0;
+      tempBox.visible = isVisible;
       tempBox.scale.setScalar(isVisible ? 1 : 0);
 
       tempBox.updateMatrix();
       meshRef.current.setMatrixAt(i, tempBox.matrix);
     }
+
     meshRef.current.instanceMatrix.needsUpdate = true;
   });
 
@@ -209,25 +205,12 @@ function Scene({ population }: { population: number[][] }) {
       <PerspectiveCamera
         makeDefault
         ref={camera}
-        // far={1000}
-        // near={0.1}
         position={[0, 100, 0]}
         rotation={[-Math.PI / 2, 0, -Math.PI / 2]}
         fov={45}
-      />
-
-      <ambientLight color="white" intensity={0.5} />
-      <pointLight ref={pointLight} color="white" position={[5, 5, 5]} />
-
-      <group ref={directionalLightGroup}>
-        <directionalLight
-          ref={directionalLight}
-          color="white"
-          intensity={1}
-          position={[5, 5, 5]}
-        />
-      </group>
-
+      ></PerspectiveCamera>
+      <ambientLight color="#ffffff" intensity={0.333} />
+      <pointLight ref={pointLight} color="#ffffff" position={[0, 200, 0]} />
       <instancedMesh
         ref={meshRef}
         args={[cellGeometry, cellMaterial, GOL.rows * GOL.columns]}
@@ -283,16 +266,27 @@ export default function Hero() {
         ref={canvasRef}
         frameloop={frameloop}
         linear
-        gl={{ alpha: false, antialias: true, pixelRatio: dpr }}
+        gl={{ alpha: true, antialias: true, pixelRatio: dpr }}
         camera={{ position: [-0.001, 80, 0], fov: 45 }}
-        style={{ background: "#181818" }}
+        // style={{ background: "#f1f5f9" }}
+        // style={{ background: "#181818" }}
       >
         <Scene population={population} />
+        {/* <fog attach="fog" color="#ADFF16" near={1} far={200} /> */}
         {/* <Controls /> */}
         {/* <axesHelper /> */}
         {/* <gridHelper args={[100, 100, 0xdddddd]} /> */}
         {/* <Stats /> */}
-        <Environment preset="city" />
+
+        <Stars
+          radius={100}
+          depth={10}
+          count={5000}
+          factor={4}
+          saturation={0}
+          fade
+          speed={0.5}
+        />
       </Canvas>
     </div>
   );

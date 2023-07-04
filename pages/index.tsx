@@ -14,7 +14,7 @@ export default function Home() {
         <title>kubasobecki.pl | home</title>
       </Head>
       <Layout>
-        <section className="relative flex h-[50dvh] min-h-[500px] max-w-full flex-col justify-center bg-myLime py-24 text-myDark">
+        <section className="relative flex h-[50dvh] min-h-[500px] max-w-full flex-col justify-center bg-myDark py-24 text-myDark">
           <Hero />
           {/* <h3 className="font-mono text-2xl uppercase">Hi, my name is Kuba</h3>
           <h1 className="font-sans text-6xl">I make websites</h1> */}
