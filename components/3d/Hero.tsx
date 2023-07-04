@@ -13,16 +13,17 @@ import {
   useHelper,
   Stats,
   Environment,
+  PerspectiveCamera,
 } from "@react-three/drei";
 import { useDevicePixelRatio } from "use-device-pixel-ratio";
 
 const GOL = {
-  rows: 120,
+  rows: 200,
   columns: 360,
   density: 0.5,
   fps: 30,
   pps: 10,
-  cubeSize: 0.66,
+  cellSize: 0.66,
 };
 
 const tempBox = new THREE.Object3D();
@@ -140,7 +141,7 @@ function generateNextEpoch(currentEpoch: number[][]): number[][] {
 }
 
 function Scene({ population }: { population: number[][] }) {
-  const camera = useRef(null!);
+  const camera = useRef<THREE.PerspectiveCamera>(null!);
   const pointLight = useRef(null!);
   const directionalLight = useRef(null!);
   const directionalLightGroup = useRef<Group>(null!);
@@ -148,17 +149,17 @@ function Scene({ population }: { population: number[][] }) {
 
   // Shared Geometry
   const cellGeometry = useMemo(() => {
-    const g = new THREE.PlaneGeometry(GOL.cubeSize, GOL.cubeSize);
+    const g = new THREE.PlaneGeometry(GOL.cellSize, GOL.cellSize);
     g.rotateX(Math.PI / 2);
     return g;
   }, []);
   // const cellGeometry = useMemo(
-  //   () => new THREE.BoxGeometry(GOL.cubeSize, GOL.cubeSize, GOL.cubeSize),
+  //   () => new THREE.BoxGeometry(GOL.cellSize, GOL.cellSize, GOL.cellSize),
   //   []
   // );
 
   // Shared Material
-  const material = useMemo(
+  const cellMaterial = useMemo(
     () =>
       new THREE.MeshPhongMaterial({
         color: "#adff16",
@@ -169,12 +170,23 @@ function Scene({ population }: { population: number[][] }) {
   );
 
   useHelper(camera, CameraHelper);
-  useHelper(pointLight, PointLightHelper, 1, "red");
-  useHelper(directionalLight, DirectionalLightHelper, 1, "red");
+  // useHelper(pointLight, PointLightHelper, 1, "red");
+  // useHelper(directionalLight, DirectionalLightHelper, 1, "red");
 
+  // Update cells
   useFrame(({ clock }) => {
-    const t = clock.oldTime * 0.0005;
-    directionalLightGroup.current.rotation.y = t;
+    // const t = clock.oldTime * 0.005;
+    // directionalLightGroup.current.rotation.y = t;
+    // camera.current.rotation.x = t;
+
+    // Camera movement
+    const et = clock.elapsedTime;
+    // console.log(camera.current);
+    camera.current.position.z = Math.sin(et / 5) * 50;
+    camera.current.position.y = 75 - Math.sin(et / 10) * 15;
+    // camera.current.rotation.x = -Math.PI / 2 - Math.sin(et / Math.PI) / 10;
+    camera.current.rotation.z = -Math.PI / 2 - Math.sin(et / Math.PI) / 5;
+    camera.current.rotation.y = Math.sin(et / Math.PI) / 10;
 
     for (let i = 0; i < GOL.rows * GOL.columns; i++) {
       const currentRow = Math.floor((GOL.columns + i) / GOL.columns) - 1;
@@ -194,7 +206,15 @@ function Scene({ population }: { population: number[][] }) {
 
   return (
     <>
-      <perspectiveCamera ref={camera} position={[-0.001, 5, 0]} fov={70} />
+      <PerspectiveCamera
+        makeDefault
+        ref={camera}
+        // far={1000}
+        // near={0.1}
+        position={[0, 100, 0]}
+        rotation={[-Math.PI / 2, 0, -Math.PI / 2]}
+        fov={45}
+      />
 
       <ambientLight color="white" intensity={0.5} />
       <pointLight ref={pointLight} color="white" position={[5, 5, 5]} />
@@ -210,7 +230,7 @@ function Scene({ population }: { population: number[][] }) {
 
       <instancedMesh
         ref={meshRef}
-        args={[cellGeometry, material, GOL.rows * GOL.columns]}
+        args={[cellGeometry, cellMaterial, GOL.rows * GOL.columns]}
       />
     </>
   );
@@ -268,10 +288,10 @@ export default function Hero() {
         style={{ background: "#181818" }}
       >
         <Scene population={population} />
-        <Controls />
+        {/* <Controls /> */}
         {/* <axesHelper /> */}
         {/* <gridHelper args={[100, 100, 0xdddddd]} /> */}
-        <Stats />
+        {/* <Stats /> */}
         <Environment preset="city" />
       </Canvas>
     </div>
